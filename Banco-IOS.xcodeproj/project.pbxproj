@@ -28,6 +28,7 @@
 		5FF4746628511EC700763859 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 5FF4746528511EC700763859 /* FirebaseRemoteConfig */; };
 		5FF4746828511EC700763859 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 5FF4746728511EC700763859 /* FirebaseStorage */; };
 		5FF4746A28513E6B00763859 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF4746928513E6B00763859 /* MenuViewController.swift */; };
+		5FF4747028515B8100763859 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FF4746F28515B8100763859 /* MenuViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		5F72C75A285117EA00A7E610 /* Banco_IOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banco_IOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5FF4745428511D2B00763859 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5FF4746928513E6B00763859 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		5FF4746F28515B8100763859 /* MenuViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MenuViewController.xib; path = ../MenuViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 		5F72C736285117E900A7E610 /* Banco-IOS */ = {
 			isa = PBXGroup;
 			children = (
+				5FF4746F28515B8100763859 /* MenuViewController.xib */,
 				5F72C737285117E900A7E610 /* AppDelegate.swift */,
 				5F72C739285117E900A7E610 /* SceneDelegate.swift */,
 				5F72C73B285117E900A7E610 /* AuthViewController.swift */,
@@ -270,6 +273,7 @@
 			files = (
 				5F72C744285117EA00A7E610 /* LaunchScreen.storyboard in Resources */,
 				5FF4745528511D2B00763859 /* GoogleService-Info.plist in Resources */,
+				5FF4747028515B8100763859 /* MenuViewController.xib in Resources */,
 				5F72C741285117EA00A7E610 /* Assets.xcassets in Resources */,
 				5F72C73F285117E900A7E610 /* Main.storyboard in Resources */,
 			);

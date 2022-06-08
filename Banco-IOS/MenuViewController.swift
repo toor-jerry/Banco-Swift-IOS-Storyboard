@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class MenuViewController: UIViewController {
 
@@ -28,9 +29,16 @@ class MenuViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         title="Menú"
+        usuarioLabel.text = "Logueado como: \(usuario)"
     }
     
     @IBAction func cerrarSesion(_ sender: Any) {
+        do {
+            try Auth.auth().signOut()
+            navigationController?.popViewController(animated: true)
+        } catch {
+            // Manejo de errores si no se pudo salir de la sesion (alerta)
+        }
     }
     
     /*

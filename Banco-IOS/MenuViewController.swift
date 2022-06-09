@@ -12,12 +12,13 @@ class MenuViewController: UIViewController {
 
     @IBOutlet weak var usuarioLabel: UILabel!
     @IBOutlet weak var cerrarSesionButton: UIButton!
+    @IBOutlet weak var configurarPerfilButton: UIButton!
+    @IBOutlet weak var consultaSaldoButton: UIButton!
     
+    private let email: String
     
-    private let usuario: String
-    
-    init(usuario: String) {
-        self.usuario = usuario
+    init(email: String) {
+        self.email = email
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -29,7 +30,7 @@ class MenuViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         title="Menú"
-        usuarioLabel.text = "Logueado como: \(usuario)"
+        usuarioLabel.text = "Logueado como: \(email)"
     }
     
     @IBAction func cerrarSesion(_ sender: Any) {
@@ -39,7 +40,18 @@ class MenuViewController: UIViewController {
         } catch {
             // Manejo de errores si no se pudo salir de la sesion (alerta)
         }
+        
+        
     }
+    
+    @IBAction func configurarPerfil(_ sender: Any) {
+        self.navigationController?.pushViewController(ConfigurarPerfilViewController(email: email), animated: true)
+    }
+    
+    @IBAction func consultarSaldo(_ sender: Any) {
+        self.navigationController?.pushViewController(ConsultaSaldoViewController(email: email), animated: true)
+    }
+    
     
     /*
     // MARK: - Navigation

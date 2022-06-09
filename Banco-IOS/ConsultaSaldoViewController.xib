@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ConsultaSaldoViewController" customModule="Banco_IOS" customModuleProvider="target">
+            <connections>
+                <outlet property="saldoTextView" destination="o4d-zu-vkk" id="dSs-T6-Fe6"/>
+                <outlet property="view" destination="iN0-l3-epB" id="nJW-DS-7RG"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="D2I-vq-7L3">
+                    <rect key="frame" x="16" y="60" width="382" height="40"/>
+                    <subviews>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="o4d-zu-vkk">
+                            <rect key="frame" x="0.0" y="0.0" width="382" height="40"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="200" id="aSk-l9-vw0"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="wFp-2I-ita"/>
+                            </constraints>
+                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                            <color key="textColor" systemColor="labelColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="ovk-Ph-75Z"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="D2I-vq-7L3" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="5Ur-sX-WGJ"/>
+                <constraint firstItem="D2I-vq-7L3" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="B3s-Rj-wkp"/>
+                <constraint firstAttribute="trailing" secondItem="D2I-vq-7L3" secondAttribute="trailing" constant="16" id="HU9-yY-h5K"/>
+                <constraint firstItem="D2I-vq-7L3" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="HW8-0T-hrc"/>
+                <constraint firstItem="D2I-vq-7L3" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="KNI-fi-tIK"/>
+                <constraint firstItem="D2I-vq-7L3" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="50" id="L3h-zy-BrA"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="D2I-vq-7L3" secondAttribute="trailing" constant="16" id="bL1-Pu-hzV"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="D2I-vq-7L3" secondAttribute="trailing" constant="16" id="c6X-0C-tSM"/>
+                <constraint firstItem="D2I-vq-7L3" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="jV5-23-Amr"/>
+            </constraints>
+            <point key="canvasLocation" x="137.68115942028987" y="93.75"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

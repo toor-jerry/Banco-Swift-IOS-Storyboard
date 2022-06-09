@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5F012A452852AE1B000D69C5 /* DepositoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F012A442852AE1B000D69C5 /* DepositoViewController.swift */; };
-		5F012A472852AE33000D69C5 /* DespositoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F012A462852AE33000D69C5 /* DespositoViewController.xib */; };
 		5F557FFE28526E4200C202AB /* MisUtilidades.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F557FFD28526E4200C202AB /* MisUtilidades.swift */; };
 		5F558000285279C800C202AB /* MiInformacionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F557FFF285279C800C202AB /* MiInformacionViewController.swift */; };
 		5F558002285279E400C202AB /* MiInformacionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F558001285279E400C202AB /* MiInformacionViewController.xib */; };
@@ -40,6 +39,7 @@
 		5FF474752851685100763859 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5FF474742851685100763859 /* FirebaseFirestoreSwift */; };
 		5FF474772851733C00763859 /* ConfigurarPerfilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF474762851733C00763859 /* ConfigurarPerfilViewController.swift */; };
 		5FF4747B2851741100763859 /* ConfigurarPerfilViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FF4747A2851741100763859 /* ConfigurarPerfilViewController.xib */; };
+		5FFD9F0B2852B3BE00AC1700 /* DepositoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FFD9F0A2852B3BE00AC1700 /* DepositoViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,7 +61,6 @@
 
 /* Begin PBXFileReference section */
 		5F012A442852AE1B000D69C5 /* DepositoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositoViewController.swift; sourceTree = "<group>"; };
-		5F012A462852AE33000D69C5 /* DespositoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DespositoViewController.xib; sourceTree = "<group>"; };
 		5F557FFD28526E4200C202AB /* MisUtilidades.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MisUtilidades.swift; sourceTree = "<group>"; };
 		5F557FFF285279C800C202AB /* MiInformacionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiInformacionViewController.swift; sourceTree = "<group>"; };
 		5F558001285279E400C202AB /* MiInformacionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MiInformacionViewController.xib; sourceTree = "<group>"; };
@@ -85,6 +84,7 @@
 		5FF4746F28515B8100763859 /* MenuViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MenuViewController.xib; path = ../MenuViewController.xib; sourceTree = "<group>"; };
 		5FF474762851733C00763859 /* ConfigurarPerfilViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurarPerfilViewController.swift; sourceTree = "<group>"; };
 		5FF4747A2851741100763859 /* ConfigurarPerfilViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConfigurarPerfilViewController.xib; sourceTree = "<group>"; };
+		5FFD9F0A2852B3BE00AC1700 /* DepositoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DepositoViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,13 +145,13 @@
 		5F72C736285117E900A7E610 /* Banco-IOS */ = {
 			isa = PBXGroup;
 			children = (
-				5FF4746F28515B8100763859 /* MenuViewController.xib */,
 				5F98D6B32851A7F700F1214F /* ConsultaSaldoViewController.swift */,
 				5F98D6B52851A85000F1214F /* ConsultaSaldoViewController.xib */,
 				5F72C737285117E900A7E610 /* AppDelegate.swift */,
 				5F72C739285117E900A7E610 /* SceneDelegate.swift */,
 				5F72C73D285117E900A7E610 /* Main.storyboard */,
 				5F72C73B285117E900A7E610 /* AuthViewController.swift */,
+				5FF4746F28515B8100763859 /* MenuViewController.xib */,
 				5FF4746928513E6B00763859 /* MenuViewController.swift */,
 				5F72C740285117EA00A7E610 /* Assets.xcassets */,
 				5F72C742285117EA00A7E610 /* LaunchScreen.storyboard */,
@@ -162,7 +162,7 @@
 				5F557FFF285279C800C202AB /* MiInformacionViewController.swift */,
 				5F558001285279E400C202AB /* MiInformacionViewController.xib */,
 				5F012A442852AE1B000D69C5 /* DepositoViewController.swift */,
-				5F012A462852AE33000D69C5 /* DespositoViewController.xib */,
+				5FFD9F0A2852B3BE00AC1700 /* DepositoViewController.xib */,
 			);
 			path = "Banco-IOS";
 			sourceTree = "<group>";
@@ -308,9 +308,9 @@
 				5F98D6B62851A85000F1214F /* ConsultaSaldoViewController.xib in Resources */,
 				5FF4747B2851741100763859 /* ConfigurarPerfilViewController.xib in Resources */,
 				5F558002285279E400C202AB /* MiInformacionViewController.xib in Resources */,
+				5FFD9F0B2852B3BE00AC1700 /* DepositoViewController.xib in Resources */,
 				5F72C744285117EA00A7E610 /* LaunchScreen.storyboard in Resources */,
 				5FF4745528511D2B00763859 /* GoogleService-Info.plist in Resources */,
-				5F012A472852AE33000D69C5 /* DespositoViewController.xib in Resources */,
 				5FF4747028515B8100763859 /* MenuViewController.xib in Resources */,
 				5F72C741285117EA00A7E610 /* Assets.xcassets in Resources */,
 				5F72C73F285117E900A7E610 /* Main.storyboard in Resources */,

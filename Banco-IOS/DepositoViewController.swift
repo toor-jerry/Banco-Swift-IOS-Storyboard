@@ -32,7 +32,47 @@ class DepositoViewController: UIViewController {
     
 
     @IBAction func depositar(_ sender: Any) {
+        let monto = Double(montoInput.text ?? "0.0") ?? 0.0
+        if monto <= 0.0 {
+            // Alert
+            let alertController = UIAlertController(title: "Advertencia", message: "Por favor ingrese valores positivos y mayores a 0.0", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
+            
+            self.present(alertController, animated: true, completion: nil)
+        } else {
+            // Obtiene valor en saldo
+            var saldoCuentaActual = 0.0
+            db.collection("usuarios").document(email).getDocument {
+            (documentSnapshot, error) in
+                if let document = documentSnapshot, error == nil {
+                    if let saldo = document.get("saldoCuenta") as? Double {
+                        saldoCuentaActual = saldo
+                    }
+             }
+            // Guarda el saldo actual
+                saldoCuentaActual += monto
+            self.db.collection("usuarios").document(self.email).setData([
+                "saldoCuenta": saldoCuentaActual
+            ],
+            merge: true)
+            // Notifica al usuario
+                // Alert
+                let alertController = UIAlertController(title: "Información", message: "Se ha realizado el abono correctamente, su nuevo saldo en su cuenta es de $ \(saldoCuentaActual) MXN", preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
+                
+                self.present(alertController, animated: true, completion: nil)
+            // Registro en bitácora
+            let movimiento = String(Int.random(in: 100000000...999999999))
+            self.db.collection("bitacora").document().setData([
+                "idMovimiento": movimiento,
+                "usuario": self.email,
+                "descripcion": "Se realizó un depósito a la cuenta actual el día \(Timestamp(date: Date())) con número de movimiento 'Mov-\(movimiento)",
+                "tipoMovimiento": "Depósito"
+            ])
+        }
+        }
     }
+    
     /*
     // MARK: - Navigation
 

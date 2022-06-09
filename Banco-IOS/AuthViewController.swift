@@ -9,6 +9,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
+
 class AuthViewController: UIViewController {
 
     @IBOutlet weak var emailTextField: UITextField!
@@ -30,12 +31,21 @@ class AuthViewController: UIViewController {
             Auth.auth().createUser(withEmail: email, password: password) {
                 (result, error) in
                 if let _ = result, error == nil {
-                    let cuenta:String = String(Int.random(in: 100000000...999999999))
+                    let cuenta:String = "Cue-\(String(Int.random(in: 100000000...999999999)))"
                     self.db.collection("usuarios").document(email).setData([
                         "cuenta":cuenta,
                         "bono": 0.0,
                         "saldoCuenta": 0.0,
-                        "bonoAsignado": false
+                        "bonoAsignado": false,
+                        "fechaCreacionCuenta": Timestamp(date: Date())
+                    ])
+                    // Registro en bitácora
+                    let movimiento = String(Int.random(in: 100000000...999999999))
+                    self.db.collection("bitacora").document().setData([
+                        "idMovimiento": movimiento,
+                        "usuario": email,
+                        "descripcion": "Se aperturó la cuenta '\(cuenta)' el día \(Timestamp(date: Date())) con número de movimiento '0000-\(movimiento)",
+                        "tipoMovimiento": "Creación de cuenta"
                     ])
                     // Navegando entre vistas y pasando datos en constructor
                     // Alert
@@ -58,12 +68,27 @@ class AuthViewController: UIViewController {
         if let email=emailTextField.text,let password=passwordTextField.text {
             Auth.auth().signIn(withEmail: email, password: password) {
                 (result, error) in
+                let movimiento = String(Int.random(in: 100000000...999999999))
                 if let _ = result, error == nil {
+                    // Registro en bitácora
+                    self.db.collection("bitacora").document().setData([
+                        "idMovimiento": movimiento,
+                        "usuario": email,
+                        "descripcion": "Se inició sesión el día \(Timestamp(date: Date())) con número de movimiento 'IN-\(movimiento)",
+                        "tipoMovimiento": "Inicio de sesión"
+                    ])
                     // Navegando entre vistas y pasando datos en constructor
                     self.navigationController?.pushViewController(MenuViewController(email: email), animated: true)
                 } else {
+                    // Registro en bitácora
+                    self.db.collection("bitacora").document().setData([
+                        "idMovimiento": movimiento,
+                        "usuario": email,
+                        "descripcion": "Se intentó iniciar sesión el día \(Timestamp(date: Date())) con número de movimiento 'IN-ERROR-\(movimiento)",
+                        "tipoMovimiento": "Inicio de sesión incorrecto"
+                    ])
                     // Alert
-                    let alertController = UIAlertController(title: "Error", message: "Se ha producido un error al guardar el usuario", preferredStyle: .alert)
+                    let alertController = UIAlertController(title: "Advertencia", message: "Verifique su usuario y/o contraseña", preferredStyle: .alert)
                     alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
                     
                     self.present(alertController, animated: true, completion: nil)

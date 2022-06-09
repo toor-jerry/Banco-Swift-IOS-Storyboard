@@ -13,6 +13,8 @@
                 <outlet property="cerrarSesionButton" destination="S01-RU-3VM" id="Ii7-XP-Bsb"/>
                 <outlet property="configurarPerfilButton" destination="mLK-21-eb6" id="1ZW-8B-rHr"/>
                 <outlet property="consultaSaldoButton" destination="tWu-lf-db1" id="13s-l9-zRH"/>
+                <outlet property="depositoButton" destination="FmS-EX-jlk" id="WRz-8O-5iS"/>
+                <outlet property="miInformacionButton" destination="f97-lB-2R7" id="F0a-w2-y8N"/>
                 <outlet property="usuarioLabel" destination="PrW-te-PX8" id="qY3-ub-cpr"/>
                 <outlet property="view" destination="iN0-l3-epB" id="eUZ-v8-Ljq"/>
             </connections>
@@ -23,7 +25,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="TJ1-CN-LZS">
-                    <rect key="frame" x="16" y="60" width="382" height="382"/>
+                    <rect key="frame" x="16" y="60" width="382" height="421"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PrW-te-PX8">
                             <rect key="frame" x="0.0" y="0.0" width="382" height="31"/>
@@ -36,7 +38,7 @@
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="tinted" title="Consulta de saldo"/>
                             <connections>
-                                <action selector="consultarSaldo:" destination="-1" eventType="touchUpInside" id="5Fb-jg-0aW"/>
+                                <action selector="consultarSaldo:" destination="-1" eventType="touchUpInside" id="8f3-qC-tVm"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8qG-Yj-YJD">
@@ -53,6 +55,9 @@
                             <rect key="frame" x="0.0" y="156" width="382" height="31"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="tinted" title="Realizar un depósito"/>
+                            <connections>
+                                <action selector="depositar:" destination="-1" eventType="touchUpInside" id="wAb-7c-MX1"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Mb-D3-5AH">
                             <rect key="frame" x="0.0" y="195" width="382" height="31"/>
@@ -77,8 +82,16 @@
                                 <action selector="configurarPerfil:" destination="-1" eventType="touchUpInside" id="c0R-Hj-lbl"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S01-RU-3VM">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f97-lB-2R7">
                             <rect key="frame" x="0.0" y="351" width="382" height="31"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="tinted" title="Mi información"/>
+                            <connections>
+                                <action selector="verMiInformacion:" destination="-1" eventType="touchUpInside" id="XNs-xY-iEQ"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S01-RU-3VM">
+                            <rect key="frame" x="0.0" y="390" width="382" height="31"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="tinted" title="Cerrar Sesión">
                                 <color key="baseForegroundColor" systemColor="systemRedColor"/>

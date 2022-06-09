@@ -14,6 +14,8 @@ class MenuViewController: UIViewController {
     @IBOutlet weak var cerrarSesionButton: UIButton!
     @IBOutlet weak var configurarPerfilButton: UIButton!
     @IBOutlet weak var consultaSaldoButton: UIButton!
+    @IBOutlet weak var miInformacionButton: UIButton!
+    @IBOutlet weak var depositoButton: UIButton!
     
     private let email: String
     
@@ -30,6 +32,7 @@ class MenuViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         title="Menú"
+        
         usuarioLabel.text = "Logueado como: \(email)"
     }
     
@@ -52,6 +55,14 @@ class MenuViewController: UIViewController {
         self.navigationController?.pushViewController(ConsultaSaldoViewController(email: email), animated: true)
     }
     
+    
+    @IBAction func verMiInformacion(_ sender: Any) {
+        self.navigationController?.pushViewController(MiInformacionViewController(email: email), animated: true)
+    }
+    
+    @IBAction func depositar(_ sender: Any) {
+        self.navigationController?.pushViewController(DepositoViewController(email: email), animated: true)
+    }
     
     /*
     // MARK: - Navigation

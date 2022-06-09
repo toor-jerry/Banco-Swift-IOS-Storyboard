@@ -12,6 +12,7 @@ import FirebaseFirestore
 class ConfigurarPerfilViewController: UIViewController {
     
     @IBOutlet weak var nombreCompletoInputTextField: UITextField!
+    @IBOutlet weak var direccionInputTextField: UITextField!
     @IBOutlet weak var guardarButton: UIButton!
     @IBOutlet weak var eliminarCuentaButton: UIButton!
     
@@ -37,6 +38,9 @@ class ConfigurarPerfilViewController: UIViewController {
                 if let nombre = document.get("nombre") as? String {
                     self.nombreCompletoInputTextField.text = nombre
                 }
+                if let direccion = document.get("direccion") as? String {
+                    self.direccionInputTextField.text = direccion
+                }
             }
          }
     }
@@ -51,7 +55,18 @@ class ConfigurarPerfilViewController: UIViewController {
         
         let OKAction = UIAlertAction(title: "Continuar 🥹", style: .default) { [self] (action) in
             do {
-                self.db.collection("usuarios").document(self.email).delete()
+                
+                self.db.collection("bitacora").whereField("usuario", isEqualTo: self.email)
+                    .getDocuments() { (querySnapshot, err) in
+                        if let err = err {
+                            print("Error getting documents: \(err)")
+                        } else {
+                            for document in querySnapshot!.documents {
+                                self.db.collection("bitacora").document(document.documentID).delete()
+                            }
+                            self.db.collection("usuarios").document(self.email).delete()
+                        }
+                }
                 Auth.auth().currentUser?.delete()
                 try Auth.auth().signOut()
                 navigationController?.popViewController(animated: true)
@@ -67,6 +82,20 @@ class ConfigurarPerfilViewController: UIViewController {
     }
     
     @IBAction func guardarDatos(_ sender: Any) {
+        
+        self.db.collection("usuarios").document(self.email).setData([
+            "nombre": self.nombreCompletoInputTextField.text ?? "",
+            "direccion": self.direccionInputTextField.text ?? ""
+        ],
+        merge: true)
+        // Registro en bitácora
+        let movimiento = String(Int.random(in: 100000000...999999999))
+        self.db.collection("bitacora").document().setData([
+            "idMovimiento": movimiento,
+            "usuario": self.email,
+            "descripcion": "Se realizó actualización de datos el día \(Timestamp(date: Date())) con número de movimiento 'Mov-\(movimiento)",
+            "tipoMovimiento": "Actualización datos"
+        ])
         
     }
     

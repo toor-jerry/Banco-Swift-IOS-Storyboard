@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ConfigurarPerfilViewController" customModule="Banco_IOS" customModuleProvider="target">
             <connections>
+                <outlet property="direccionInputTextField" destination="tFq-e9-8JL" id="Dhp-sS-eD5"/>
                 <outlet property="eliminarCuentaButton" destination="smS-nU-XL8" id="faD-fk-EpJ"/>
                 <outlet property="guardarButton" destination="WLx-jz-8SO" id="mEL-bK-sDp"/>
                 <outlet property="nombreCompletoInputTextField" destination="tVE-gQ-kDq" id="8Yc-zx-mws"/>
@@ -22,17 +23,22 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ooR-Gk-b4d">
-                    <rect key="frame" x="16" y="60" width="382" height="118"/>
+                    <rect key="frame" x="16" y="60" width="382" height="160"/>
                     <subviews>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Nombre completo" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tVE-gQ-kDq">
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nombre completo" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tVE-gQ-kDq">
                             <rect key="frame" x="0.0" y="0.0" width="382" height="34"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" textContentType="name"/>
                         </textField>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WLx-jz-8SO">
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Dirección" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tFq-e9-8JL">
                             <rect key="frame" x="0.0" y="42" width="382" height="34"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WLx-jz-8SO">
+                            <rect key="frame" x="0.0" y="84" width="382" height="34"/>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="filled" title="Guardar">
+                            <buttonConfiguration key="configuration" style="filled" title="Actualizar datos">
                                 <color key="baseForegroundColor" systemColor="systemGroupedBackgroundColor"/>
                                 <color key="baseBackgroundColor" systemColor="systemGreenColor"/>
                             </buttonConfiguration>
@@ -41,7 +47,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="smS-nU-XL8">
-                            <rect key="frame" x="0.0" y="84" width="382" height="34"/>
+                            <rect key="frame" x="0.0" y="126" width="382" height="34"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="tinted" title="Eliminar cuenta">
                                 <color key="baseForegroundColor" systemColor="systemRedColor"/>

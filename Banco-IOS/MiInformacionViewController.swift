@@ -1,22 +1,18 @@
 //
-//  ConsultaSaldoViewController.swift
+//  MiInformacionViewController.swift
 //  Banco-IOS
 //
-//  Created by user216116 on 08/06/22.
+//  Created by user216116 on 09/06/22.
 //
 
 import UIKit
 import FirebaseFirestore
 
-class ConsultaSaldoViewController: UIViewController {
-
-    @IBOutlet weak var saldoTextView: UITextView!
+class MiInformacionViewController: UIViewController {
     
-    
+    @IBOutlet weak var nombreTextView: UITextView!
     private let email: String
     private let db = Firestore.firestore()
-    
-    
     
     init(email: String) {
         self.email = email
@@ -28,24 +24,16 @@ class ConsultaSaldoViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        title="Consulta de saldo"
+
         // Do any additional setup after loading the view.
-        self.saldoTextView.text = "No cuenta con saldo..."
-        self.saldoTextView.textColor = .black
-        
+        title = "Mi información"
         db.collection("usuarios").document(email).getDocument {
         (documentSnapshot, error) in
             if let document = documentSnapshot, error == nil {
-                if let saldo = document.get("saldoCuenta") as? Double {                    self.saldoTextView.text = "Su saldo actual en su cuenta es de $ \(saldo) MXN"
+                if let nombre = document.get("nombre") as? String {                    self.nombreTextView.text = nombre
+                } else {
+                    self.nombreTextView.text = "No cuenta con un nombre que mostrar, agreguelo en la opción 'Configurar Perfil'"
                 }
-                // Registro en bitácora
-                let movimiento = String(Int.random(in: 100000000...999999999))
-                self.db.collection("bitacora").document().setData([
-                    "idMovimiento": movimiento,
-                    "usuario": self.email,
-                    "descripcion": "Se finalizó la sesión el día \(Timestamp(date: Date())) con número de movimiento 'IN-CIERRE-\(movimiento)",
-                    "tipoMovimiento": "Cierre de sesión"
-                ])
             }
          }
     }

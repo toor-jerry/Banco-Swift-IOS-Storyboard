@@ -16,6 +16,8 @@
 		5F72C74F285117EA00A7E610 /* Banco_IOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F72C74E285117EA00A7E610 /* Banco_IOSTests.swift */; };
 		5F72C759285117EA00A7E610 /* Banco_IOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F72C758285117EA00A7E610 /* Banco_IOSUITests.swift */; };
 		5F72C75B285117EA00A7E610 /* Banco_IOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F72C75A285117EA00A7E610 /* Banco_IOSUITestsLaunchTests.swift */; };
+		5F98D6B42851A7F700F1214F /* ConsultaSaldoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F98D6B32851A7F700F1214F /* ConsultaSaldoViewController.swift */; };
+		5F98D6B62851A85000F1214F /* ConsultaSaldoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F98D6B52851A85000F1214F /* ConsultaSaldoViewController.xib */; };
 		5FF4745528511D2B00763859 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5FF4745428511D2B00763859 /* GoogleService-Info.plist */; };
 		5FF4745628511D2B00763859 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5FF4745428511D2B00763859 /* GoogleService-Info.plist */; };
 		5FF4745728511D2B00763859 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5FF4745428511D2B00763859 /* GoogleService-Info.plist */; };
@@ -29,6 +31,10 @@
 		5FF4746828511EC700763859 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 5FF4746728511EC700763859 /* FirebaseStorage */; };
 		5FF4746A28513E6B00763859 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF4746928513E6B00763859 /* MenuViewController.swift */; };
 		5FF4747028515B8100763859 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FF4746F28515B8100763859 /* MenuViewController.xib */; };
+		5FF474732851685100763859 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 5FF474722851685100763859 /* FirebaseFirestore */; };
+		5FF474752851685100763859 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5FF474742851685100763859 /* FirebaseFirestoreSwift */; };
+		5FF474772851733C00763859 /* ConfigurarPerfilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF474762851733C00763859 /* ConfigurarPerfilViewController.swift */; };
+		5FF4747B2851741100763859 /* ConfigurarPerfilViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FF4747A2851741100763859 /* ConfigurarPerfilViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,9 +68,13 @@
 		5F72C754285117EA00A7E610 /* Banco-IOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Banco-IOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F72C758285117EA00A7E610 /* Banco_IOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banco_IOSUITests.swift; sourceTree = "<group>"; };
 		5F72C75A285117EA00A7E610 /* Banco_IOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banco_IOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		5F98D6B32851A7F700F1214F /* ConsultaSaldoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultaSaldoViewController.swift; sourceTree = "<group>"; };
+		5F98D6B52851A85000F1214F /* ConsultaSaldoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConsultaSaldoViewController.xib; sourceTree = "<group>"; };
 		5FF4745428511D2B00763859 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5FF4746928513E6B00763859 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		5FF4746F28515B8100763859 /* MenuViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MenuViewController.xib; path = ../MenuViewController.xib; sourceTree = "<group>"; };
+		5FF474762851733C00763859 /* ConfigurarPerfilViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurarPerfilViewController.swift; sourceTree = "<group>"; };
+		5FF4747A2851741100763859 /* ConfigurarPerfilViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConfigurarPerfilViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +87,8 @@
 				5FF4746428511EC700763859 /* FirebasePerformance in Frameworks */,
 				5FF4746628511EC700763859 /* FirebaseRemoteConfig in Frameworks */,
 				5FF4745E28511EC700763859 /* FirebaseAuth in Frameworks */,
+				5FF474752851685100763859 /* FirebaseFirestoreSwift in Frameworks */,
+				5FF474732851685100763859 /* FirebaseFirestore in Frameworks */,
 				5FF4746828511EC700763859 /* FirebaseStorage in Frameworks */,
 				5FF4746028511EC700763859 /* FirebaseDatabase in Frameworks */,
 				5FF4745A28511EC700763859 /* FirebaseAnalytics in Frameworks */,
@@ -124,14 +136,18 @@
 			isa = PBXGroup;
 			children = (
 				5FF4746F28515B8100763859 /* MenuViewController.xib */,
+				5F98D6B32851A7F700F1214F /* ConsultaSaldoViewController.swift */,
+				5F98D6B52851A85000F1214F /* ConsultaSaldoViewController.xib */,
 				5F72C737285117E900A7E610 /* AppDelegate.swift */,
 				5F72C739285117E900A7E610 /* SceneDelegate.swift */,
-				5F72C73B285117E900A7E610 /* AuthViewController.swift */,
 				5F72C73D285117E900A7E610 /* Main.storyboard */,
+				5F72C73B285117E900A7E610 /* AuthViewController.swift */,
 				5FF4746928513E6B00763859 /* MenuViewController.swift */,
 				5F72C740285117EA00A7E610 /* Assets.xcassets */,
 				5F72C742285117EA00A7E610 /* LaunchScreen.storyboard */,
 				5F72C745285117EA00A7E610 /* Info.plist */,
+				5FF474762851733C00763859 /* ConfigurarPerfilViewController.swift */,
+				5FF4747A2851741100763859 /* ConfigurarPerfilViewController.xib */,
 			);
 			path = "Banco-IOS";
 			sourceTree = "<group>";
@@ -179,6 +195,8 @@
 				5FF4746328511EC700763859 /* FirebasePerformance */,
 				5FF4746528511EC700763859 /* FirebaseRemoteConfig */,
 				5FF4746728511EC700763859 /* FirebaseStorage */,
+				5FF474722851685100763859 /* FirebaseFirestore */,
+				5FF474742851685100763859 /* FirebaseFirestoreSwift */,
 			);
 			productName = "Banco-IOS";
 			productReference = 5F72C734285117E900A7E610 /* Banco-IOS.app */;
@@ -254,6 +272,7 @@
 			mainGroup = 5F72C72B285117E900A7E610;
 			packageReferences = (
 				5FF4745828511EC700763859 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				5FF474712851685100763859 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 5F72C735285117E900A7E610 /* Products */;
 			projectDirPath = "";
@@ -271,6 +290,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F98D6B62851A85000F1214F /* ConsultaSaldoViewController.xib in Resources */,
+				5FF4747B2851741100763859 /* ConfigurarPerfilViewController.xib in Resources */,
 				5F72C744285117EA00A7E610 /* LaunchScreen.storyboard in Resources */,
 				5FF4745528511D2B00763859 /* GoogleService-Info.plist in Resources */,
 				5FF4747028515B8100763859 /* MenuViewController.xib in Resources */,
@@ -303,6 +324,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F72C73C285117E900A7E610 /* AuthViewController.swift in Sources */,
+				5F98D6B42851A7F700F1214F /* ConsultaSaldoViewController.swift in Sources */,
+				5FF474772851733C00763859 /* ConfigurarPerfilViewController.swift in Sources */,
 				5F72C738285117E900A7E610 /* AppDelegate.swift in Sources */,
 				5F72C73A285117E900A7E610 /* SceneDelegate.swift in Sources */,
 				5FF4746A28513E6B00763859 /* MenuViewController.swift in Sources */,
@@ -651,6 +674,14 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		5FF474712851685100763859 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -693,6 +724,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5FF4745828511EC700763859 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		5FF474722851685100763859 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5FF474712851685100763859 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		5FF474742851685100763859 /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5FF474712851685100763859 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -16,6 +16,7 @@ class MenuViewController: UIViewController {
     @IBOutlet weak var consultaSaldoButton: UIButton!
     @IBOutlet weak var miInformacionButton: UIButton!
     @IBOutlet weak var depositoButton: UIButton!
+    @IBOutlet weak var retiroButton: UIButton!
     
     private let email: String
     
@@ -62,6 +63,10 @@ class MenuViewController: UIViewController {
     
     @IBAction func depositar(_ sender: Any) {
         self.navigationController?.pushViewController(DepositoViewController(email: email), animated: true)
+    }
+    
+    @IBAction func retirar(_ sender: Any) {
+        self.navigationController?.pushViewController(RetiroViewController(email: email), animated: true)
     }
     
     /*

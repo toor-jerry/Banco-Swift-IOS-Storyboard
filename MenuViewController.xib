@@ -15,6 +15,7 @@
                 <outlet property="consultaSaldoButton" destination="tWu-lf-db1" id="13s-l9-zRH"/>
                 <outlet property="depositoButton" destination="FmS-EX-jlk" id="WRz-8O-5iS"/>
                 <outlet property="miInformacionButton" destination="f97-lB-2R7" id="F0a-w2-y8N"/>
+                <outlet property="retiroButton" destination="6Mb-D3-5AH" id="Mwf-rD-ZhV"/>
                 <outlet property="usuarioLabel" destination="PrW-te-PX8" id="qY3-ub-cpr"/>
                 <outlet property="view" destination="iN0-l3-epB" id="eUZ-v8-Ljq"/>
             </connections>
@@ -63,6 +64,9 @@
                             <rect key="frame" x="0.0" y="195" width="382" height="31"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="tinted" title="Realizar un retiro"/>
+                            <connections>
+                                <action selector="retirar:" destination="-1" eventType="touchUpInside" id="MIK-Pm-8mK"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rww-Na-7j7">
                             <rect key="frame" x="0.0" y="234" width="382" height="31"/>

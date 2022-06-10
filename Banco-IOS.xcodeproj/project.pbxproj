@@ -40,6 +40,8 @@
 		5FF474772851733C00763859 /* ConfigurarPerfilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF474762851733C00763859 /* ConfigurarPerfilViewController.swift */; };
 		5FF4747B2851741100763859 /* ConfigurarPerfilViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FF4747A2851741100763859 /* ConfigurarPerfilViewController.xib */; };
 		5FFD9F0B2852B3BE00AC1700 /* DepositoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FFD9F0A2852B3BE00AC1700 /* DepositoViewController.xib */; };
+		5FFD9F0D2852BEF500AC1700 /* RetiroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFD9F0C2852BEF500AC1700 /* RetiroViewController.swift */; };
+		5FFD9F0F2852BF0500AC1700 /* RetiroViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FFD9F0E2852BF0500AC1700 /* RetiroViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +87,8 @@
 		5FF474762851733C00763859 /* ConfigurarPerfilViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurarPerfilViewController.swift; sourceTree = "<group>"; };
 		5FF4747A2851741100763859 /* ConfigurarPerfilViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConfigurarPerfilViewController.xib; sourceTree = "<group>"; };
 		5FFD9F0A2852B3BE00AC1700 /* DepositoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DepositoViewController.xib; sourceTree = "<group>"; };
+		5FFD9F0C2852BEF500AC1700 /* RetiroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetiroViewController.swift; sourceTree = "<group>"; };
+		5FFD9F0E2852BF0500AC1700 /* RetiroViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RetiroViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +167,8 @@
 				5F558001285279E400C202AB /* MiInformacionViewController.xib */,
 				5F012A442852AE1B000D69C5 /* DepositoViewController.swift */,
 				5FFD9F0A2852B3BE00AC1700 /* DepositoViewController.xib */,
+				5FFD9F0C2852BEF500AC1700 /* RetiroViewController.swift */,
+				5FFD9F0E2852BF0500AC1700 /* RetiroViewController.xib */,
 			);
 			path = "Banco-IOS";
 			sourceTree = "<group>";
@@ -314,6 +320,7 @@
 				5FF4747028515B8100763859 /* MenuViewController.xib in Resources */,
 				5F72C741285117EA00A7E610 /* Assets.xcassets in Resources */,
 				5F72C73F285117E900A7E610 /* Main.storyboard in Resources */,
+				5FFD9F0F2852BF0500AC1700 /* RetiroViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +352,7 @@
 				5F558000285279C800C202AB /* MiInformacionViewController.swift in Sources */,
 				5F557FFE28526E4200C202AB /* MisUtilidades.swift in Sources */,
 				5F012A452852AE1B000D69C5 /* DepositoViewController.swift in Sources */,
+				5FFD9F0D2852BEF500AC1700 /* RetiroViewController.swift in Sources */,
 				5FF474772851733C00763859 /* ConfigurarPerfilViewController.swift in Sources */,
 				5F72C738285117E900A7E610 /* AppDelegate.swift in Sources */,
 				5F72C73A285117E900A7E610 /* SceneDelegate.swift in Sources */,

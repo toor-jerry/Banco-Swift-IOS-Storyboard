@@ -33,23 +33,40 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ijb-lF-4VR">
-                                <rect key="frame" x="16" y="104" width="382" height="136"/>
+                                <rect key="frame" x="16" y="104" width="382" height="184"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vvj-ri-vK6">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="40"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" textContentType="email"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Contraseña" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9vu-Iw-m6x">
                                         <rect key="frame" x="0.0" y="48" width="382" height="40"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="kSk-37-BwZ">
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nle-tt-qDs">
                                         <rect key="frame" x="0.0" y="96" width="382" height="40"/>
                                         <subviews>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t4P-Uo-O0p">
+                                                <rect key="frame" x="0.0" y="4.5" width="51" height="31"/>
+                                                <connections>
+                                                    <action selector="recordarme:" destination="BYZ-38-t0r" eventType="valueChanged" id="Vy6-1u-MwD"/>
+                                                </connections>
+                                            </switch>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recordarme" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqR-0z-23d">
+                                                <rect key="frame" x="57" y="10" width="325" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" systemColor="systemPinkColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="kSk-37-BwZ">
+                                        <rect key="frame" x="0.0" y="144" width="382" height="40"/>
+                                        <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bSu-0d-4dG">
-                                                <rect key="frame" x="0.0" y="0.0" width="187" height="40"/>
+                                                <rect key="frame" x="0.0" y="4.5" width="187" height="31"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="filled" title="Registrar">
                                                     <color key="baseBackgroundColor" systemColor="systemGreenColor"/>
@@ -59,11 +76,11 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6JB-dp-aLk">
-                                                <rect key="frame" x="195" y="0.0" width="187" height="40"/>
+                                                <rect key="frame" x="195" y="4.5" width="187" height="31"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="filled" title="Acceder"/>
                                                 <connections>
-                                                    <action selector="iniciarSesion:" destination="BYZ-38-t0r" eventType="touchUpInside" id="01U-Bj-pvx"/>
+                                                    <action selector="iniciarSesion:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sbM-Dt-7cu"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -87,6 +104,7 @@
                         <outlet property="accederButton" destination="6JB-dp-aLk" id="xqO-KW-3dS"/>
                         <outlet property="emailTextField" destination="Vvj-ri-vK6" id="9Ia-jz-nfw"/>
                         <outlet property="passwordTextField" destination="9vu-Iw-m6x" id="HKL-5X-cEy"/>
+                        <outlet property="recordarmeSwitch" destination="t4P-Uo-O0p" id="KUp-qt-NHw"/>
                         <outlet property="registrarButton" destination="bSu-0d-4dG" id="ZnE-l0-JF8"/>
                     </connections>
                 </viewController>
@@ -101,6 +119,9 @@
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

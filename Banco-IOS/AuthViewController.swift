@@ -16,15 +16,25 @@ class AuthViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var registrarButton: UIButton!
     @IBOutlet weak var accederButton: UIButton!
+    @IBOutlet weak var recordarmeSwitch: UISwitch!
     
     private let db = Firestore.firestore()
+    private let KEY_EMAIL = "EMAIL"
+    private let KEY_PASSWORD = "PASWORD"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         title="Autenticación"
-        emailTextField.text = "test@gmail.com"
-        passwordTextField.text = "12345678"
+        // Recuperando datos de userDefaults
+        if let emailUserDef = UserDefaults.standard.string(forKey: KEY_EMAIL), let passwordUserDef = UserDefaults.standard.string(forKey: KEY_PASSWORD) {
+            emailTextField.text = emailUserDef
+            passwordTextField.text = passwordUserDef
+        } else {
+            emailTextField.text = ""
+            passwordTextField.text = ""
+        }
+        
     }
     
     func validarEmail(email:String) -> Bool {
@@ -73,6 +83,7 @@ class AuthViewController: UIViewController {
                         "fecha": Timestamp(date: Date()),
                         "notificacionBonoVista": false
                     ])
+                    self.guardarUserDefaults()
                     // Navegando entre vistas y pasando datos en constructor
                     // Alert
                     let alertController = UIAlertController(title: "Felicidades!!", message: "Su cuenta ha sido creada satisfactoriamente, su número de cuenta es '\(cuenta)' y cuenta al momento con $ 0.0 pesos", preferredStyle: .alert)
@@ -90,9 +101,25 @@ class AuthViewController: UIViewController {
             }
         }
     }
-
+    
+    @IBAction func recordarme(_ sender: Any) {
+        guardarUserDefaults()
+    }
+    
+    func guardarUserDefaults() {
+        if recordarmeSwitch.isOn {
+            UserDefaults.standard.set(self.emailTextField.text!, forKey: KEY_EMAIL)
+            UserDefaults.standard.set(self.passwordTextField.text!, forKey: KEY_PASSWORD)
+            UserDefaults.standard.synchronize()
+        } else {
+            UserDefaults.standard.removeObject(forKey: KEY_EMAIL)
+            UserDefaults.standard.removeObject(forKey: KEY_PASSWORD)
+            UserDefaults.standard.synchronize()
+        }
+    }
+    
     @IBAction func iniciarSesion(_ sender: Any) {
-        if emailTextField.text! == "" {
+    if emailTextField.text! == "" {
             // Alert
             let alertController = UIAlertController(title: "Alerta!", message: "Ingrese un email!", preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
@@ -121,6 +148,7 @@ class AuthViewController: UIViewController {
                         "tipoMovimiento": "Inicio de sesión",
                         "fecha": Date()
                     ])
+                    self.guardarUserDefaults()
                     // Navegando entre vistas y pasando datos en constructor
                     self.navigationController?.pushViewController(MenuViewController(email: email), animated: true)
                 } else {

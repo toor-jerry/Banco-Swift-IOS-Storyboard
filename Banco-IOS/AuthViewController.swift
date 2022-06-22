@@ -26,7 +26,30 @@ class AuthViewController: UIViewController {
         emailTextField.text = "test@gmail.com"
         passwordTextField.text = "12345678"
     }
+    
+    func validarEmail(email:String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: email)
+    }
+
     @IBAction func registrarCuenta(_ sender: Any) {
+        if emailTextField.text! == "" {
+            // Alert
+            let alertController = UIAlertController(title: "Alerta!", message: "Ingrese un email!", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
+        else if !validarEmail(email: emailTextField.text!){
+            // Alert
+            let alertController = UIAlertController(title: "Alerta!", message: "Ingrese un email correcto!!", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
+        
         if let email=emailTextField.text,let password=passwordTextField.text {
             Auth.auth().createUser(withEmail: email, password: password) {
                 (result, error) in
@@ -37,6 +60,7 @@ class AuthViewController: UIViewController {
                         "bono": 0.0,
                         "saldoCuenta": 0.0,
                         "bonoAsignado": false,
+                        "correo": email,
                         "fechaCreacionCuenta": Timestamp(date: Date())
                     ])
                     // Registro en bitácora
@@ -44,8 +68,10 @@ class AuthViewController: UIViewController {
                     self.db.collection("bitacora").document().setData([
                         "idMovimiento": movimiento,
                         "usuario": email,
-                        "descripcion": "Se aperturó la cuenta '\(cuenta)' el día \(Timestamp(date: Date())) con número de movimiento '0000-\(movimiento)",
-                        "tipoMovimiento": "Creación de cuenta"
+                        "descripcion": "Se aperturó la cuenta '\(cuenta)' el día \(Date()) con número de movimiento '0000-\(movimiento)",
+                        "tipoMovimiento": "Creación de cuenta",
+                        "fecha": Timestamp(date: Date()),
+                        "notificacionBonoVista": false
                     ])
                     // Navegando entre vistas y pasando datos en constructor
                     // Alert
@@ -64,7 +90,24 @@ class AuthViewController: UIViewController {
             }
         }
     }
+
     @IBAction func iniciarSesion(_ sender: Any) {
+        if emailTextField.text! == "" {
+            // Alert
+            let alertController = UIAlertController(title: "Alerta!", message: "Ingrese un email!", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
+        else if !validarEmail(email: emailTextField.text!){
+            // Alert
+            let alertController = UIAlertController(title: "Alerta!", message: "Ingrese un email correcto!!", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
+        
+        
         if let email=emailTextField.text,let password=passwordTextField.text {
             Auth.auth().signIn(withEmail: email, password: password) {
                 (result, error) in
@@ -74,8 +117,9 @@ class AuthViewController: UIViewController {
                     self.db.collection("bitacora").document().setData([
                         "idMovimiento": movimiento,
                         "usuario": email,
-                        "descripcion": "Se inició sesión el día \(Timestamp(date: Date())) con número de movimiento 'IN-\(movimiento)",
-                        "tipoMovimiento": "Inicio de sesión"
+                        "descripcion": "Se inició sesión el día \(Date()) con número de movimiento 'IN-\(movimiento)",
+                        "tipoMovimiento": "Inicio de sesión",
+                        "fecha": Date()
                     ])
                     // Navegando entre vistas y pasando datos en constructor
                     self.navigationController?.pushViewController(MenuViewController(email: email), animated: true)
@@ -84,8 +128,9 @@ class AuthViewController: UIViewController {
                     self.db.collection("bitacora").document().setData([
                         "idMovimiento": movimiento,
                         "usuario": email,
-                        "descripcion": "Se intentó iniciar sesión el día \(Timestamp(date: Date())) con número de movimiento 'IN-ERROR-\(movimiento)",
-                        "tipoMovimiento": "Inicio de sesión incorrecto"
+                        "descripcion": "Se intentó iniciar sesión el día \(Date()) con número de movimiento 'IN-ERROR-\(movimiento)",
+                        "tipoMovimiento": "Inicio de sesión incorrecto",
+                        "fecha": Date()
                     ])
                     // Alert
                     let alertController = UIAlertController(title: "Advertencia", message: "Verifique su usuario y/o contraseña", preferredStyle: .alert)

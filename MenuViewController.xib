@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -15,7 +16,9 @@
                 <outlet property="consultaSaldoButton" destination="tWu-lf-db1" id="13s-l9-zRH"/>
                 <outlet property="depositoButton" destination="FmS-EX-jlk" id="WRz-8O-5iS"/>
                 <outlet property="miInformacionButton" destination="f97-lB-2R7" id="F0a-w2-y8N"/>
+                <outlet property="movimientosButton" destination="rww-Na-7j7" id="BDf-1o-LOX"/>
                 <outlet property="retiroButton" destination="6Mb-D3-5AH" id="Mwf-rD-ZhV"/>
+                <outlet property="transferenciaButton" destination="8qG-Yj-YJD" id="DjH-HA-vuC"/>
                 <outlet property="usuarioLabel" destination="PrW-te-PX8" id="qY3-ub-cpr"/>
                 <outlet property="view" destination="iN0-l3-epB" id="eUZ-v8-Ljq"/>
             </connections>
@@ -34,70 +37,97 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tWu-lf-db1">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tWu-lf-db1">
                             <rect key="frame" x="0.0" y="39" width="382" height="31"/>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="tinted" title="Consulta de saldo"/>
+                            <buttonConfiguration key="configuration" style="tinted" title="Consulta de saldo">
+                                <imageReference key="image" image="rectangle.and.text.magnifyingglass.rtl" catalog="system" symbolScale="default"/>
+                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
+                            </buttonConfiguration>
                             <connections>
                                 <action selector="consultarSaldo:" destination="-1" eventType="touchUpInside" id="8f3-qC-tVm"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8qG-Yj-YJD">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8qG-Yj-YJD">
                             <rect key="frame" x="0.0" y="78" width="382" height="31"/>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="tinted" title="Realizar una transferencia"/>
+                            <buttonConfiguration key="configuration" style="tinted" image="laptopcomputer.and.arrow.down" catalog="system" title="Realizar una transferencia">
+                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
+                            </buttonConfiguration>
+                            <connections>
+                                <action selector="tranfererir:" destination="-1" eventType="touchUpInside" id="SEO-h4-IWK"/>
+                            </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bfl-7j-Ms6">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bfl-7j-Ms6">
                             <rect key="frame" x="0.0" y="117" width="382" height="31"/>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="tinted" title="Realizar una inversión"/>
+                            <buttonConfiguration key="configuration" style="tinted" image="dollarsign.square.fill" catalog="system" title="Realizar una inversión">
+                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
+                            </buttonConfiguration>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FmS-EX-jlk">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FmS-EX-jlk">
                             <rect key="frame" x="0.0" y="156" width="382" height="31"/>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="tinted" title="Realizar un depósito"/>
+                            <buttonConfiguration key="configuration" style="tinted" image="creditcard.and.123" catalog="system" title="Realizar un depósito">
+                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
+                            </buttonConfiguration>
                             <connections>
                                 <action selector="depositar:" destination="-1" eventType="touchUpInside" id="wAb-7c-MX1"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Mb-D3-5AH">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Mb-D3-5AH">
                             <rect key="frame" x="0.0" y="195" width="382" height="31"/>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="tinted" title="Realizar un retiro"/>
+                            <buttonConfiguration key="configuration" style="tinted" title="Realizar un retiro">
+                                <imageReference key="image" image="dollarsign.circle.fill" catalog="system" symbolScale="default"/>
+                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
+                            </buttonConfiguration>
                             <connections>
                                 <action selector="retirar:" destination="-1" eventType="touchUpInside" id="MIK-Pm-8mK"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rww-Na-7j7">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rww-Na-7j7">
                             <rect key="frame" x="0.0" y="234" width="382" height="31"/>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="tinted" title="Ver movimientos"/>
+                            <buttonConfiguration key="configuration" style="tinted" image="doc.text.magnifyingglass" catalog="system" title="Ver movimientos">
+                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
+                            </buttonConfiguration>
+                            <connections>
+                                <action selector="verMovimientos:" destination="-1" eventType="touchUpInside" id="f9e-Px-3qW"/>
+                            </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="58n-s2-vrO">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="58n-s2-vrO">
                             <rect key="frame" x="0.0" y="273" width="382" height="31"/>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="tinted" title="Ver inversiones"/>
+                            <buttonConfiguration key="configuration" style="tinted" image="chart.line.uptrend.xyaxis" catalog="system" title="Ver inversiones">
+                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
+                            </buttonConfiguration>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mLK-21-eb6">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mLK-21-eb6">
                             <rect key="frame" x="0.0" y="312" width="382" height="31"/>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="tinted" title="Configurar mi perfil"/>
+                            <buttonConfiguration key="configuration" style="tinted" image="person.fill" catalog="system" title="Configurar mi perfil">
+                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
+                            </buttonConfiguration>
                             <connections>
                                 <action selector="configurarPerfil:" destination="-1" eventType="touchUpInside" id="c0R-Hj-lbl"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f97-lB-2R7">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f97-lB-2R7">
                             <rect key="frame" x="0.0" y="351" width="382" height="31"/>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="tinted" title="Mi información"/>
+                            <buttonConfiguration key="configuration" style="tinted" image="info.circle" catalog="system" title="Mi información">
+                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
+                            </buttonConfiguration>
                             <connections>
                                 <action selector="verMiInformacion:" destination="-1" eventType="touchUpInside" id="XNs-xY-iEQ"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S01-RU-3VM">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S01-RU-3VM">
                             <rect key="frame" x="0.0" y="390" width="382" height="31"/>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="tinted" title="Cerrar Sesión">
+                            <buttonConfiguration key="configuration" style="tinted" image="rectangle.portrait.and.arrow.right.fill" catalog="system" title="Cerrar Sesión">
+                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
                                 <color key="baseForegroundColor" systemColor="systemRedColor"/>
                                 <color key="baseBackgroundColor" systemColor="systemRedColor"/>
                             </buttonConfiguration>
@@ -119,6 +149,16 @@
         </view>
     </objects>
     <resources>
+        <image name="chart.line.uptrend.xyaxis" catalog="system" width="128" height="101"/>
+        <image name="creditcard.and.123" catalog="system" width="128" height="90"/>
+        <image name="doc.text.magnifyingglass" catalog="system" width="107" height="128"/>
+        <image name="dollarsign.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="dollarsign.square.fill" catalog="system" width="128" height="114"/>
+        <image name="info.circle" catalog="system" width="128" height="121"/>
+        <image name="laptopcomputer.and.arrow.down" catalog="system" width="128" height="84"/>
+        <image name="person.fill" catalog="system" width="128" height="120"/>
+        <image name="rectangle.and.text.magnifyingglass.rtl" catalog="system" width="128" height="89"/>
+        <image name="rectangle.portrait.and.arrow.right.fill" catalog="system" width="128" height="108"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

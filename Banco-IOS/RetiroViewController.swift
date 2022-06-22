@@ -65,8 +65,9 @@ class RetiroViewController: UIViewController {
                         self.db.collection("bitacora").document().setData([
                             "idMovimiento": movimiento,
                             "usuario": self.email,
-                            "descripcion": "Se realizó un retiro en la cuenta actual el día \(Timestamp(date: Date())) con número de movimiento 'Mov-\(movimiento)",
-                            "tipoMovimiento": "Retiro"
+                            "descripcion": "Se realizó un retiro en la cuenta actual el día \(Date()) con número de movimiento 'Mov-\(movimiento)",
+                            "tipoMovimiento": "Retiro",
+                            "fecha": Timestamp(date: Date())
                         ])
                 } else {
                     // Alert

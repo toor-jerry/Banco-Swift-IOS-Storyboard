@@ -10,11 +10,14 @@ import FirebaseFirestore
 
 class ConsultaSaldoViewController: UIViewController {
 
-    @IBOutlet weak var saldoTextView: UITextView!
-    
+  
+    @IBOutlet weak var saldoLabel: UILabel!
+    @IBOutlet weak var bonoLabel: UILabel!
+    @IBOutlet weak var saldoTotalLabel: UILabel!
     
     private let email: String
     private let db = Firestore.firestore()
+    private var saldo = 0.0
     
     
     
@@ -30,21 +33,30 @@ class ConsultaSaldoViewController: UIViewController {
         super.viewDidLoad()
         title="Consulta de saldo"
         // Do any additional setup after loading the view.
-        self.saldoTextView.text = "No cuenta con saldo..."
-        self.saldoTextView.textColor = .black
+        self.saldoLabel.text = "No cuenta con saldo..."
         
         db.collection("usuarios").document(email).getDocument {
         (documentSnapshot, error) in
             if let document = documentSnapshot, error == nil {
-                if let saldo = document.get("saldoCuenta") as? Double {                    self.saldoTextView.text = "Su saldo actual en su cuenta es de $ \(saldo) MXN"
+                if let saldo = document.get("saldoCuenta") as? Double {
+                    self.saldo = saldo
+                    self.saldoLabel.text = "Su saldo actual en su cuenta es de: $\(saldo) MXN"
+                }
+                // Comprobando si esta asignado el bono
+                if let bonoAsignado = document.get("bonoAsignado") as? Bool, let bono = document.get("bono") as? Double {
+                    if bonoAsignado {
+                        self.bonoLabel.text = "El monto actual del bono es de: $\(bono) MXN"
+                        self.saldoTotalLabel.text = "Saldo total: $\(self.saldo + bono) MXN"
+                    }
                 }
                 // Registro en bitácora
                 let movimiento = String(Int.random(in: 100000000...999999999))
                 self.db.collection("bitacora").document().setData([
                     "idMovimiento": movimiento,
                     "usuario": self.email,
-                    "descripcion": "Se finalizó la sesión el día \(Timestamp(date: Date())) con número de movimiento 'IN-CIERRE-\(movimiento)",
-                    "tipoMovimiento": "Cierre de sesión"
+                    "descripcion": "Se consultó el saldo en la cuenta el día \(Date()) con número de movimiento 'Con-\(movimiento)",
+                    "tipoMovimiento": "Consulta de saldo",
+                    "fecha": Timestamp(date: Date())
                 ])
             }
          }

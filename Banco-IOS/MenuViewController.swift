@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class MenuViewController: UIViewController {
 
@@ -17,8 +18,11 @@ class MenuViewController: UIViewController {
     @IBOutlet weak var miInformacionButton: UIButton!
     @IBOutlet weak var depositoButton: UIButton!
     @IBOutlet weak var retiroButton: UIButton!
+    @IBOutlet weak var movimientosButton: UIButton!
+    @IBOutlet weak var transferenciaButton: UIButton!
     
     private let email: String
+    private let db = Firestore.firestore()
     
     init(email: String) {
         self.email = email
@@ -33,8 +37,38 @@ class MenuViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         title="Menú"
+        db.collection("usuarios").document(email).getDocument {
+        (documentSnapshot, error) in
+            if let document = documentSnapshot, error == nil {
+                if let nombre = document.get("nombre") as? String {
+                    self.usuarioLabel.text = "Logueado como: \(nombre)"
+                } else {
+                    self.usuarioLabel.text = "Logueado como: \(self.email)"
+                }
+                if let bonoAsignado = document.get("bonoAsignado") as? Bool, let notificacionBonoVista = document.get("notificacionBonoVista") as? Bool {
+                    if bonoAsignado && notificacionBonoVista == false {
+                        var saldo = 0.0
+                        var bono = 0.0
+                        if let saldoTemp = document.get("saldoCuenta") as? Double {
+                            saldo = saldoTemp
+                        }
+                        if let bonoDB = document.get("bono") as? Double {
+                            bono = bonoDB
+                        }
+                        // Alert
+                        let alertController = UIAlertController(title: "Información", message: "Felicidades, ha obtenido un bono con un valor de $ 50,000 MXN!! \nSaldo en la cuenta: $ \(saldo) MXN \nSaldo total: $ \(saldo + bono)", preferredStyle: .alert)
+                        alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
+                        // Actualiza la bandera de la alerta para que no sea mostrada de nuevo
+                        self.db.collection("usuarios").document(self.email).setData([
+                            "notificacionBonoVista": true
+                        ],
+                        merge: true)
+                        self.present(alertController, animated: true, completion: nil)
+                    }
+                }
+         }
         
-        usuarioLabel.text = "Logueado como: \(email)"
+            }
     }
     
     @IBAction func cerrarSesion(_ sender: Any) {
@@ -69,6 +103,15 @@ class MenuViewController: UIViewController {
         self.navigationController?.pushViewController(RetiroViewController(email: email), animated: true)
     }
     
+    
+    @IBAction func verMovimientos(_ sender: Any) {
+        self.navigationController?.pushViewController(MovimientosViewController(email: email), animated: true)
+    }
+    
+    
+    @IBAction func tranfererir(_ sender: Any) {
+        self.navigationController?.pushViewController(TransferenciaViewController(email: email), animated: true)
+    }
     /*
     // MARK: - Navigation
 

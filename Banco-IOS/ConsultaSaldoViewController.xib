@@ -10,7 +10,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ConsultaSaldoViewController" customModule="Banco_IOS" customModuleProvider="target">
             <connections>
-                <outlet property="saldoTextView" destination="o4d-zu-vkk" id="dSs-T6-Fe6"/>
+                <outlet property="bonoLabel" destination="fpr-tx-3ci" id="k7e-La-tip"/>
+                <outlet property="saldoLabel" destination="Ute-QU-mrT" id="Wsc-jE-shC"/>
+                <outlet property="saldoTotalLabel" destination="En9-5L-6w5" id="h7H-j1-nDQ"/>
                 <outlet property="view" destination="iN0-l3-epB" id="nJW-DS-7RG"/>
             </connections>
         </placeholder>
@@ -19,49 +21,49 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="D2I-vq-7L3">
-                    <rect key="frame" x="16" y="60" width="382" height="40"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="WPF-Lh-hjn">
+                    <rect key="frame" x="16" y="60" width="382" height="77.5"/>
                     <subviews>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="o4d-zu-vkk">
-                            <rect key="frame" x="0.0" y="0.0" width="382" height="40"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="200" id="aSk-l9-vw0"/>
-                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="wFp-2I-ita"/>
-                            </constraints>
-                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                            <color key="textColor" systemColor="labelColor"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                        </textView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ute-QU-mrT">
+                            <rect key="frame" x="0.0" y="0.0" width="382" height="20.5"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fpr-tx-3ci">
+                            <rect key="frame" x="0.0" y="28.5" width="382" height="20.5"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <color key="textColor" systemColor="tintColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="En9-5L-6w5">
+                            <rect key="frame" x="0.0" y="57" width="382" height="20.5"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <color key="textColor" systemColor="systemPinkColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="40" id="ovk-Ph-75Z"/>
-                    </constraints>
                 </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="D2I-vq-7L3" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="5Ur-sX-WGJ"/>
-                <constraint firstItem="D2I-vq-7L3" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="B3s-Rj-wkp"/>
-                <constraint firstAttribute="trailing" secondItem="D2I-vq-7L3" secondAttribute="trailing" constant="16" id="HU9-yY-h5K"/>
-                <constraint firstItem="D2I-vq-7L3" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="HW8-0T-hrc"/>
-                <constraint firstItem="D2I-vq-7L3" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="KNI-fi-tIK"/>
-                <constraint firstItem="D2I-vq-7L3" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="50" id="L3h-zy-BrA"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="D2I-vq-7L3" secondAttribute="trailing" constant="16" id="bL1-Pu-hzV"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="D2I-vq-7L3" secondAttribute="trailing" constant="16" id="c6X-0C-tSM"/>
-                <constraint firstItem="D2I-vq-7L3" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="jV5-23-Amr"/>
+                <constraint firstItem="WPF-Lh-hjn" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="Uzf-e1-8de"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="WPF-Lh-hjn" secondAttribute="trailing" constant="16" id="nH7-OO-71w"/>
+                <constraint firstItem="WPF-Lh-hjn" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="pDG-GE-V2q"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="93.75"/>
         </view>
     </objects>
     <resources>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

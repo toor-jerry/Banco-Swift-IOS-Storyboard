@@ -93,8 +93,9 @@ class ConfigurarPerfilViewController: UIViewController {
         self.db.collection("bitacora").document().setData([
             "idMovimiento": movimiento,
             "usuario": self.email,
-            "descripcion": "Se realizó actualización de datos el día \(Timestamp(date: Date())) con número de movimiento 'Mov-\(movimiento)",
-            "tipoMovimiento": "Actualización datos"
+            "descripcion": "Se realizó actualización de datos el día \(Date()) con número de movimiento 'Mov-\(movimiento)",
+            "tipoMovimiento": "Actualización datos",
+            "fecha": Timestamp(date: Date())
         ])
         
     }

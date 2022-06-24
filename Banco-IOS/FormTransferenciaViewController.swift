@@ -147,6 +147,8 @@ class FormTransferenciaViewController: UIViewController {
             
             self.dbM.tranferir(usuarioOrigen: usuarioOrigen, usuarioDestino: usuarioDestino,clase: self, monto: monto)
             
+            // Dandole seguimiento al bono
+            self.dbM.registroBitacora(email: self.usuarioOrigen.correo, descripcionMovimiento: "Se realizó un movimiento de tipo 'Transferencia-BONO' de la cuenta \(usuarioOrigen.cuenta) a la \(usuarioDestino.cuenta) con un monto de \(montoBono)", tipoMovimiento: "Transferencia", complementoIdMovimiento: "Mov-Transf-Bono")
             // Actualización de los campos
             self.actualizacionCamposView()
             
@@ -164,6 +166,9 @@ class FormTransferenciaViewController: UIViewController {
             self.usuarioDestino.saldoCuenta += monto
             
             self.dbM.tranferir(usuarioOrigen: usuarioOrigen, usuarioDestino: usuarioDestino,clase: self, monto: monto)
+            
+            // Dandole seguimiento al bono
+            self.dbM.registroBitacora(email: self.usuarioOrigen.correo, descripcionMovimiento: "Se realizó un movimiento de tipo 'Transferencia-BONO' de la cuenta \(usuarioOrigen.cuenta) a la \(usuarioDestino.cuenta) con un monto de \(monto)", tipoMovimiento: "Transferencia", complementoIdMovimiento: "Mov-Transf-Bono")
             
             // Actualización de los campos
             self.actualizacionCamposView()

@@ -10,8 +10,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RetiroViewController" customModule="Banco_IOS" customModuleProvider="target">
             <connections>
+                <outlet property="bonoLabel" destination="tnZ-be-IgB" id="vv4-TU-SV1"/>
                 <outlet property="montoInput" destination="xcI-7F-nZg" id="ZBN-uV-3lf"/>
                 <outlet property="retiroButton" destination="llm-ah-qnc" id="v2c-tx-s3l"/>
+                <outlet property="saldoLabel" destination="otL-xT-i8e" id="Fah-kz-AcS"/>
+                <outlet property="saldoTotalLabel" destination="Ne8-Yz-jDn" id="Kb2-m1-YV1"/>
                 <outlet property="view" destination="iN0-l3-epB" id="56y-qd-jf1"/>
             </connections>
         </placeholder>
@@ -21,15 +24,33 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Sg0-aE-znJ">
-                    <rect key="frame" x="16" y="60" width="382" height="76"/>
+                    <rect key="frame" x="16" y="60" width="382" height="118"/>
                     <subviews>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Monto" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xcI-7F-nZg">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saldo" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="otL-xT-i8e">
                             <rect key="frame" x="0.0" y="0.0" width="382" height="34"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bono" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tnZ-be-IgB">
+                            <rect key="frame" x="0.0" y="38" width="382" height="0.0"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <color key="textColor" systemColor="linkColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saldo Total" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ne8-Yz-jDn">
+                            <rect key="frame" x="0.0" y="38" width="382" height="0.0"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <color key="textColor" systemColor="systemPinkColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Monto" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xcI-7F-nZg">
+                            <rect key="frame" x="0.0" y="42" width="382" height="34"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" textContentType="flight-number"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="llm-ah-qnc">
-                            <rect key="frame" x="0.0" y="42" width="382" height="34"/>
+                            <rect key="frame" x="0.0" y="84" width="382" height="34"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="filled" title="$ Retirar">
                                 <color key="baseForegroundColor" systemColor="labelColor"/>
@@ -56,8 +77,14 @@
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

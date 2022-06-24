@@ -95,6 +95,18 @@ final class DBManager{
                 callback(dataDB)
             }
     }
+    func retiro(usuario: Usuario, monto: Double) {
+        
+        self.db.collection("usuarios").document(usuario.correo).setData([
+            "saldoCuenta": usuario.saldoCuenta,
+            "bono": usuario.bono
+        ], merge: true)
+        
+        // Registro historial
+        self.registroBitacora(email: usuario.correo, descripcionMovimiento: "Se realizón un retiro en la cuenta actual con un monto de \(monto)", tipoMovimiento: "Retiro", complementoIdMovimiento: "Mov-Retiro-")
+  
+    }
+    
     func tranferir(usuarioOrigen: Usuario, usuarioDestino: Usuario, clase: UIViewController, monto: Double, idMovimientoText: String = "Mov-Transf-") {
         
         self.db.collection("usuarios").document(usuarioOrigen.correo).setData([

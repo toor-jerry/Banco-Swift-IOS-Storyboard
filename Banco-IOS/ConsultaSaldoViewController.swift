@@ -17,6 +17,7 @@ class ConsultaSaldoViewController: UIViewController {
     
     private let email: String
     private let db = Firestore.firestore()
+    private let dbM = DBManager.shared
     private var saldo = 0.0
     
     
@@ -50,14 +51,7 @@ class ConsultaSaldoViewController: UIViewController {
                     }
                 }
                 // Registro en bitácora
-                let movimiento = String(Int.random(in: 100000000...999999999))
-                self.db.collection("bitacora").document().setData([
-                    "idMovimiento": movimiento,
-                    "usuario": self.email,
-                    "descripcion": "Se consultó el saldo en la cuenta el día \(Date()) con número de movimiento 'Con-\(movimiento)",
-                    "tipoMovimiento": "Consulta de saldo",
-                    "fecha": Timestamp(date: Date())
-                ])
+                self.dbM.registroBitacora(email: self.email, descripcionMovimiento: "Se consultó el saldo en la cuenta", tipoMovimiento: "Consulta de saldo", complementoIdMovimiento: "Con-")
             }
          }
     }

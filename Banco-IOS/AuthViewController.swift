@@ -7,8 +7,6 @@
 
 import UIKit
 import FirebaseAuth
-import FirebaseFirestore
-
 
 class AuthViewController: UIViewController {
 
@@ -18,9 +16,9 @@ class AuthViewController: UIViewController {
     @IBOutlet weak var accederButton: UIButton!
     @IBOutlet weak var recordarmeSwitch: UISwitch!
     
-    private let db = Firestore.firestore()
     private let KEY_EMAIL = "EMAIL"
     private let KEY_PASSWORD = "PASWORD"
+    private let db = DBManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,56 +45,28 @@ class AuthViewController: UIViewController {
     @IBAction func registrarCuenta(_ sender: Any) {
         if emailTextField.text! == "" {
             // Alert
-            let alertController = UIAlertController(title: "Alerta!", message: "Ingrese un email!", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
-            
-            self.present(alertController, animated: true, completion: nil)
+            db.mostrarAlerta(msg: "Ingrese un email!", clase: self)
         }
         else if !validarEmail(email: emailTextField.text!){
             // Alert
-            let alertController = UIAlertController(title: "Alerta!", message: "Ingrese un email correcto!!", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
-            
-            self.present(alertController, animated: true, completion: nil)
-        }
-        
-        if let email=emailTextField.text,let password=passwordTextField.text {
+            db.mostrarAlerta(msg: "Ingrese un email correcto!!", clase: self)        }else if let email=emailTextField.text,let password=passwordTextField.text {
             Auth.auth().createUser(withEmail: email, password: password) {
                 (result, error) in
                 if let _ = result, error == nil {
-                    let cuenta:String = "Cue-\(String(Int.random(in: 100000000...999999999)))"
-                    self.db.collection("usuarios").document(email).setData([
-                        "cuenta":cuenta,
-                        "bono": 0.0,
-                        "saldoCuenta": 0.0,
-                        "bonoAsignado": false,
-                        "correo": email,
-                        "fechaCreacionCuenta": Timestamp(date: Date())
-                    ])
+                    
+                    let cuenta = self.db.obtenerIdMovimiento(complemento: "Cue-")
+                    self.db.crearCuenta(cuenta: cuenta, email: email)
                     // Registro en bitácora
-                    let movimiento = String(Int.random(in: 100000000...999999999))
-                    self.db.collection("bitacora").document().setData([
-                        "idMovimiento": movimiento,
-                        "usuario": email,
-                        "descripcion": "Se aperturó la cuenta '\(cuenta)' el día \(Date()) con número de movimiento '0000-\(movimiento)",
-                        "tipoMovimiento": "Creación de cuenta",
-                        "fecha": Timestamp(date: Date()),
-                        "notificacionBonoVista": false
-                    ])
+                    self.db.registroBitacora(email: email, descripcionMovimiento: "Se aperturó la cuenta '\(cuenta)'", tipoMovimiento: "Creación de cuenta", complementoIdMovimiento: "0000-")
+
                     self.guardarUserDefaults()
                     // Navegando entre vistas y pasando datos en constructor
-                    // Alert
-                    let alertController = UIAlertController(title: "Felicidades!!", message: "Su cuenta ha sido creada satisfactoriamente, su número de cuenta es '\(cuenta)' y cuenta al momento con $ 0.0 pesos", preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
-                    
                     self.navigationController?.pushViewController(MenuViewController(email: email), animated: true)
-                    self.present(alertController, animated: true, completion: nil)
+                    // Alert
+                    self.db.mostrarAlerta(msg: "Su cuenta ha sido creada satisfactoriamente, su número de cuenta es '\(cuenta)' y cuenta al momento con $ 0.0 pesos", clase: self, titulo: "Felicidades!!")
                 } else {
                     // Alert
-                    let alertController = UIAlertController(title: "Error", message: "Se ha producido un error al guardar el usuario", preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
-                    
-                    self.present(alertController, animated: true, completion: nil)
+                    self.db.mostrarAlerta(msg: "Se ha producido un error al guardar el usuario", clase: self, titulo: "Error")
                 }
             }
         }
@@ -119,52 +89,28 @@ class AuthViewController: UIViewController {
     }
     
     @IBAction func iniciarSesion(_ sender: Any) {
-    if emailTextField.text! == "" {
+        if emailTextField.text! == "" {
             // Alert
-            let alertController = UIAlertController(title: "Alerta!", message: "Ingrese un email!", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
-            
-            self.present(alertController, animated: true, completion: nil)
+            db.mostrarAlerta(msg: "Ingrese un email!", clase: self)
         }
         else if !validarEmail(email: emailTextField.text!){
             // Alert
-            let alertController = UIAlertController(title: "Alerta!", message: "Ingrese un email correcto!!", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
-            
-            self.present(alertController, animated: true, completion: nil)
-        }
-        
-        
-        if let email=emailTextField.text,let password=passwordTextField.text {
+            db.mostrarAlerta(msg: "Ingrese un email correcto!!", clase: self)        }else if let email=emailTextField.text,let password=passwordTextField.text {
             Auth.auth().signIn(withEmail: email, password: password) {
                 (result, error) in
-                let movimiento = String(Int.random(in: 100000000...999999999))
                 if let _ = result, error == nil {
                     // Registro en bitácora
-                    self.db.collection("bitacora").document().setData([
-                        "idMovimiento": movimiento,
-                        "usuario": email,
-                        "descripcion": "Se inició sesión el día \(Date()) con número de movimiento 'IN-\(movimiento)",
-                        "tipoMovimiento": "Inicio de sesión",
-                        "fecha": Date()
-                    ])
+                    self.db.registroBitacora(email: email, descripcionMovimiento: "Se inició sesión", tipoMovimiento: "Inicio de sesión", complementoIdMovimiento: "IN-")
+                    
                     self.guardarUserDefaults()
                     // Navegando entre vistas y pasando datos en constructor
                     self.navigationController?.pushViewController(MenuViewController(email: email), animated: true)
                 } else {
                     // Registro en bitácora
-                    self.db.collection("bitacora").document().setData([
-                        "idMovimiento": movimiento,
-                        "usuario": email,
-                        "descripcion": "Se intentó iniciar sesión el día \(Date()) con número de movimiento 'IN-ERROR-\(movimiento)",
-                        "tipoMovimiento": "Inicio de sesión incorrecto",
-                        "fecha": Date()
-                    ])
-                    // Alert
-                    let alertController = UIAlertController(title: "Advertencia", message: "Verifique su usuario y/o contraseña", preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
+                    self.db.registroBitacora(email: email, descripcionMovimiento: "Intento de inició sesión fallido", tipoMovimiento: "Inicio de sesión incorrecto", complementoIdMovimiento: "IN-Error-")
                     
-                    self.present(alertController, animated: true, completion: nil)
+                    // Alert
+                    self.db.mostrarAlerta(msg: "Verifique su usuario y/o contraseña", clase: self)
                 }
             }
         }

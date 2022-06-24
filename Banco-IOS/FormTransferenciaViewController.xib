@@ -10,12 +10,14 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FormTransferenciaViewController" customModule="Banco_IOS" customModuleProvider="target">
             <connections>
+                <outlet property="bonoLabel" destination="yP0-Ks-qN7" id="ukC-Cd-Hp2"/>
                 <outlet property="correoContactoLabel" destination="o3I-fU-KAX" id="Iv1-Kw-yuS"/>
                 <outlet property="cuentaContactoLabel" destination="l9r-ej-gjv" id="jIj-y1-jxf"/>
                 <outlet property="montoInput" destination="NCJ-Lz-X4j" id="yRV-Ga-akc"/>
                 <outlet property="nombreContactoLabel" destination="a5S-Q4-ZMo" id="lFh-Jc-0D2"/>
                 <outlet property="nombreLabel" destination="wsb-gk-lpB" id="mQH-iy-Ln4"/>
                 <outlet property="saldoLabel" destination="hhQ-6V-CGY" id="yyX-8j-tRA"/>
+                <outlet property="saldoTotal" destination="GnG-PE-FoO" id="5OB-5m-NmC"/>
                 <outlet property="transferirButton" destination="WLr-dx-GzE" id="d7C-DH-cTC"/>
                 <outlet property="view" destination="iN0-l3-epB" id="YrN-Mc-QZJ"/>
             </connections>
@@ -37,7 +39,7 @@
                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L1y-zF-ata">
                             <rect key="frame" x="0.0" y="42" width="382" height="34"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Saldo actual en la cuenta: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t8C-Wh-nGV">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Saldo actual en la cuenta: $" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t8C-Wh-nGV">
                                     <rect key="frame" x="0.0" y="0.0" width="339" height="34"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                     <nil key="textColor"/>
@@ -51,6 +53,18 @@
                                 </label>
                             </subviews>
                         </stackView>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bono" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yP0-Ks-qN7">
+                            <rect key="frame" x="0.0" y="80" width="382" height="0.0"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" systemColor="systemBlueColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saldo Total" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GnG-PE-FoO">
+                            <rect key="frame" x="0.0" y="80" width="382" height="0.0"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <color key="textColor" systemColor="systemPinkColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Monto $" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NCJ-Lz-X4j">
                             <rect key="frame" x="0.0" y="84" width="382" height="34"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -141,8 +155,14 @@
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

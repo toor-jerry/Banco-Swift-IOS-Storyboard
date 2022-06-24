@@ -18,20 +18,24 @@ class FormTransferenciaViewController: UIViewController {
     @IBOutlet weak var nombreContactoLabel: UILabel!
     @IBOutlet weak var cuentaContactoLabel: UILabel!
     @IBOutlet weak var correoContactoLabel: UILabel!
+    @IBOutlet weak var saldoTotal: UILabel!
+    @IBOutlet weak var bonoLabel: UILabel!
     
-    
-    private let email: String
-    private var saldo: Double = 0.0
-    private let cuentaADepositar: String
     private let db = Firestore.firestore()
+    private let dbM = DBManager.shared
+    
+    private var usuarioOrigen = DBManager.Usuario()
+    private var usuarioDestino = DBManager.Usuario()
+    private let email: String
+    private let cuentaDestino: String
+ 
+    
     
     init(email: String, cuentaADepositar: String) {
         self.email = email
-        self.cuentaADepositar = cuentaADepositar
-        
+        self.cuentaDestino = cuentaADepositar
         super.init(nibName: nil, bundle: nil)
-
-            }
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -39,108 +43,155 @@ class FormTransferenciaViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        self.usuarioOrigen.correo = self.email
+        self.usuarioDestino.cuenta = self.cuentaDestino
         // Usuario logueado
-        db.collection("usuarios").document(email).getDocument {
+        db.collection("usuarios").document(self.usuarioOrigen.correo).getDocument {
         (documentSnapshot, error) in
             if let document = documentSnapshot, error == nil {
                 if let nombre = document.get("nombre") as? String {                    self.nombreLabel.text = nombre
+                    self.usuarioOrigen.nombre = nombre
                 } else {
-                    self.nombreLabel.text = self.email
+                    self.nombreLabel.text = self.usuarioOrigen.correo
                 }
                 if let saldo = document.get("saldoCuenta") as? Double {
                     self.saldoLabel.text = String(saldo)
-                    self.saldo = saldo
+                    self.usuarioOrigen.saldoCuenta = saldo
                 } else {
                     self.saldoLabel.text = "Error"
+                }
+                
+                if let cuenta = document.get("cuenta") as? String {
+                    self.usuarioOrigen.cuenta = cuenta
+                }
+                
+                if let bonoAsignado =  document.get("bonoAsignado") as? Bool {
+                    self.usuarioOrigen.bonoAsignado = bonoAsignado
+                }
+                
+                if let bono =  document.get("bono") as? Double {
+                    self.usuarioOrigen.bono = bono
+                    self.bonoLabel.text = "Monto del bono disponible: $ \(String(bono)) MXN"
+                    if self.usuarioOrigen.bonoAsignado && bono > 0.0 {
+                        
+                        self.bonoLabel.isHidden = false
+                        self.saldoTotal.isHidden = false
+                        self.saldoTotal.text = "Saldo Total: $ \(self.usuarioOrigen.saldoCuenta + bono)"
+                    }
+                    
                 }
                 
             }
          }
         // Información del usuario a transferir
-        db.collection("usuarios").whereField("cuenta", isEqualTo: cuentaADepositar).getDocuments {
-        (documentSnapshot, error) in
-            if let err = error {
-                // Alert
-                let alertController = UIAlertController(title: "Error", message: "A ocurrido un error. \(err)", preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
-                
-                self.present(alertController, animated: true, completion: nil)
-                self.navigationController?.popViewController(animated: true)
-                return
-            } else {
-                if documentSnapshot!.documents.count < 0 {
-                    // Alert
-                    let alertController = UIAlertController(title: "Error", message: "No se ha encontrado la cuenta.", preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
-                    self.navigationController?.popViewController(animated: true)
-                    self.present(alertController, animated: true, completion: nil)
-                    
-                } else {
-                for document in documentSnapshot!.documents {
-                    var nombre = "Sin nombre"
-                    if let nombreTemp = document.data()["nombre"] {
-                        nombre = String(describing: nombreTemp)
-                    }
-                    self.cuentaContactoLabel.text = String(describing: document.data()["cuenta"]!)
-                    self.correoContactoLabel.text = String(describing:document.data()["correo"]!)
-                    self.nombreContactoLabel.text = nombre
-                    return
-                }
-                }
+        self.dbM.getInformacionUsuario(cuenta: self.usuarioDestino.cuenta, clase: self, callback: { ( usuario) in
+            
+            if let cuenta = usuario["cuenta"] as? String {
+            self.cuentaContactoLabel.text = cuenta
+                self.usuarioDestino.cuenta = cuenta
             }
-         }
-
+            
+            if let correo = usuario["correo"] as? String {
+                self.correoContactoLabel.text = correo
+                self.usuarioDestino.correo = correo
+            }
+            if let nombre = usuario["nombre"] as? String {
+                self.nombreContactoLabel.text = nombre
+                self.usuarioDestino.nombre = nombre
+            }
+            
+            self.usuarioDestino.saldoCuenta = (usuario["saldoCuenta"] as? Double)!
+            self.usuarioDestino.bonoAsignado = (usuario["bonoAsignado"] as? Bool)!
+            self.usuarioDestino.bono = (usuario["bono"] as? Double)!
+            
+        })
+        
         
     }
     
     
     @IBAction func transferir(_ sender: Any) {
         let monto = Double(montoInput.text ?? "0.0") ?? 0.0
+    
         if monto <= 0.0 {
             // Alert
-            let alertController = UIAlertController(title: "Advertencia", message: "Por favor ingrese valores positivos y mayores a 0.0", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
+            self.dbM.mostrarAlerta(msg: "Por favor ingrese valores positivos y mayores a 0.0", clase: self)
             
-            self.present(alertController, animated: true, completion: nil)
-        } else if self.saldo < monto {
+        } else if self.usuarioOrigen.saldoCuenta >= monto {
+            
+            // Se descuenta el monto que se tranfiere y se carga al destinatario
+            self.usuarioOrigen.saldoCuenta -= monto
+            self.usuarioDestino.saldoCuenta += monto
+            
+            self.dbM.tranferir(usuarioOrigen: usuarioOrigen, usuarioDestino: usuarioDestino,clase: self, monto: monto)
+            
+            // Actualización de los campos
+            self.actualizacionCamposView()
+            
+            // Se verifica que el usuario destino es apto para el bono
+            self.asignarBonoCuentaDestino()
+            
             // Alert
-            let alertController = UIAlertController(title: "Advertencia", message: "El monto que quiere transferir es mayor a su saldo ($ \(saldo) MXN), realice un depósito para poder realizar la transferencia deseada.", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
+            self.dbM.mostrarAlerta(msg: "Se realizó con éxito la transferencia de la cuenta \(usuarioOrigen.cuenta) a la cuenta \(usuarioDestino.cuenta) con un monto de $ \(monto) MXN", clase: self, titulo: "Información")
+
             
-            self.present(alertController, animated: true, completion: nil)
+        } else if ( self.usuarioOrigen.bono > 0 && self.usuarioOrigen.saldoCuenta > 0 && ( self.usuarioOrigen.bono + self.usuarioOrigen.saldoCuenta >= monto ) ) { // Si tiene el bono y aún alcanza a retirar con el saldo
+            // Se descuenta el monto que se tranfiere y se carga al destinatario
+            let montoBono = (monto - self.usuarioOrigen.saldoCuenta)
+            let saldoCuentaTransferido = self.usuarioOrigen.saldoCuenta
+            
+            // Nuevos saldos
+            self.usuarioOrigen.saldoCuenta = 0.0
+            self.usuarioOrigen.bono -= montoBono
+            self.usuarioDestino.saldoCuenta += monto
+            
+            self.dbM.tranferir(usuarioOrigen: usuarioOrigen, usuarioDestino: usuarioDestino,clase: self, monto: monto)
+            
+            // Actualización de los campos
+            self.actualizacionCamposView()
+            
+            // Se verifica que el usuario destino es apto para el bono
+            self.asignarBonoCuentaDestino()
+            
+            // Alert
+            self.dbM.mostrarAlerta(msg: "Se realizó con éxito la transferencia de la cuenta \(usuarioOrigen.cuenta) a la cuenta \(usuarioDestino.cuenta) con un monto de \(monto) MXN. \n Monto transferido de la cuenta $ \(saldoCuentaTransferido) MXN.\n Monto transferido del bono $ \(montoBono) MXN.", clase: self, titulo: "Información")
+
+            
+        } else if monto <= self.usuarioOrigen.bono { // Si tiene el bono y alcanza a realizar la transferencia solo con el bono
+
+            // Nuevos saldos
+            self.usuarioOrigen.bono -= monto
+            self.usuarioDestino.saldoCuenta += monto
+            
+            self.dbM.tranferir(usuarioOrigen: usuarioOrigen, usuarioDestino: usuarioDestino,clase: self, monto: monto)
+            
+            // Actualización de los campos
+            self.actualizacionCamposView()
+            
+            // Se verifica que el usuario destino es apto para el bono
+            self.asignarBonoCuentaDestino()
+            
+            // Alert
+            self.dbM.mostrarAlerta(msg: "Se realizó con éxito la transferencia de la cuenta \(usuarioOrigen.cuenta) a la cuenta \(usuarioDestino.cuenta) con un monto de \(monto) MXN. \n Monto transferido del bono $ \(monto) MXN.", clase: self, titulo: "Información")
+            
+        } else {
+            // Alert
+            self.dbM.mostrarAlerta(msg: "El monto que quiere transferir es mayor a su saldo total en su cuenta ($ \(self.usuarioOrigen.saldoCuenta + self.usuarioOrigen.bono) MXN), realice un depósito para poder realizar la transferencia deseada.", clase: self)
         }
-            else {
-            // Obtiene valor en saldo
-            var saldoCuentaActual = 0.0
-            db.collection("usuarios").document(email).getDocument {
-            (documentSnapshot, error) in
-                if let document = documentSnapshot, error == nil {
-                    if let saldo = document.get("saldoCuenta") as? Double {
-                        saldoCuentaActual = saldo
-                    }
-             }
-            // Guarda el saldo actual
-                saldoCuentaActual += monto
-            self.db.collection("usuarios").document(self.email).setData([
-                "saldoCuenta": saldoCuentaActual
-            ],
-            merge: true)
-            // Notifica al usuario
-                // Alert
-                let alertController = UIAlertController(title: "Información", message: "Se ha realizado el abono correctamente, su nuevo saldo en su cuenta es de $ \(saldoCuentaActual) MXN", preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
-                
-                self.present(alertController, animated: true, completion: nil)
-            // Registro en bitácora
-            let movimiento = String(Int.random(in: 100000000...999999999))
-            self.db.collection("bitacora").document().setData([
-                "idMovimiento": movimiento,
-                "usuario": self.email,
-                "descripcion": "Se realizó un depósito a la cuenta actual el día \(Date()) con número de movimiento 'Mov-\(movimiento)",
-                "tipoMovimiento": "Depósito",
-                "fecha": Timestamp(date: Date())
-            ])
+    }
+    
+    func asignarBonoCuentaDestino() {
+        if usuarioDestino.bonoAsignado == false && usuarioDestino.saldoCuenta >= self.dbM.getSaldoAutorizadoBono() {
+            self.dbM.registrarBono(saldoCuentaActual: self.usuarioDestino.saldoCuenta, email: self.usuarioDestino.correo, clase: self, notificacionBonoVista: false)
         }
+
+    }
+    
+    func actualizacionCamposView() {
+        if self.usuarioOrigen.bonoAsignado {
+            self.saldoLabel.text = String(self.usuarioOrigen.saldoCuenta)
+            self.bonoLabel.text = "Monto del bono disponible: $ \(String(self.usuarioOrigen.bono)) MXN"
+            self.saldoTotal.text = "Saldo total: $ \(String(self.usuarioOrigen.saldoCuenta + self.usuarioOrigen.bono)) MXN"
         }
     }
     

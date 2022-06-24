@@ -14,6 +14,7 @@
 		5F3A60852858337200E15ACE /* TransferenciaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F3A60842858337200E15ACE /* TransferenciaViewController.xib */; };
 		5F558000285279C800C202AB /* MiInformacionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F557FFF285279C800C202AB /* MiInformacionViewController.swift */; };
 		5F558002285279E400C202AB /* MiInformacionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F558001285279E400C202AB /* MiInformacionViewController.xib */; };
+		5F5927D52864ADEC00F4D242 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5927D42864ADEC00F4D242 /* DBManager.swift */; };
 		5F72C738285117E900A7E610 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F72C737285117E900A7E610 /* AppDelegate.swift */; };
 		5F72C73A285117E900A7E610 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F72C739285117E900A7E610 /* SceneDelegate.swift */; };
 		5F72C73C285117E900A7E610 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F72C73B285117E900A7E610 /* AuthViewController.swift */; };
@@ -74,6 +75,7 @@
 		5F3A60842858337200E15ACE /* TransferenciaViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransferenciaViewController.xib; sourceTree = "<group>"; };
 		5F557FFF285279C800C202AB /* MiInformacionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiInformacionViewController.swift; sourceTree = "<group>"; };
 		5F558001285279E400C202AB /* MiInformacionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MiInformacionViewController.xib; sourceTree = "<group>"; };
+		5F5927D42864ADEC00F4D242 /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
 		5F72C734285117E900A7E610 /* Banco-IOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Banco-IOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F72C737285117E900A7E610 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F72C739285117E900A7E610 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				5F3A60842858337200E15ACE /* TransferenciaViewController.xib */,
 				5F07C2AC285B9AA000275124 /* FormTransferenciaViewController.swift */,
 				5F07C2AE285B9AD000275124 /* FormTransferenciaViewController.xib */,
+				5F5927D42864ADEC00F4D242 /* DBManager.swift */,
 			);
 			path = "Banco-IOS";
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				5F07C2AD285B9AA000275124 /* FormTransferenciaViewController.swift in Sources */,
 				5F72C73C285117E900A7E610 /* AuthViewController.swift in Sources */,
 				5F98D6B42851A7F700F1214F /* ConsultaSaldoViewController.swift in Sources */,
+				5F5927D52864ADEC00F4D242 /* DBManager.swift in Sources */,
 				5F558000285279C800C202AB /* MiInformacionViewController.swift in Sources */,
 				5F012A452852AE1B000D69C5 /* DepositoViewController.swift in Sources */,
 				5FFD9F0D2852BEF500AC1700 /* RetiroViewController.swift in Sources */,

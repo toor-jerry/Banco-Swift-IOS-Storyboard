@@ -6,17 +6,17 @@
 //
 
 import UIKit
-import FirebaseFirestore
 
 class TransferenciaViewController: UIViewController {
 
     @IBOutlet weak var barraDeBusqueda: UISearchBar!
     @IBOutlet weak var contactosTableView: UITableView!
     
+    private let dbM = DBManager.shared
+    
     private let email: String
     private var data: [String] = ["Sin cuentas que mostrar"]
     private var tituloTabla: String
-    private let db = Firestore.firestore()
     private var cuenta = ""
     private var busqueda = ""
     
@@ -26,7 +26,7 @@ class TransferenciaViewController: UIViewController {
         
         super.init(nibName: nil, bundle: nil)
         
-        self.getTodosLosUsuarios { (dataDB) in
+        self.dbM.getTodosLosUsuarios(email: self.email, clase: self) { ( dataDB) in
             self.data = dataDB
             self.tituloTabla += " - (\(self.data.count) registros)"
             DispatchQueue.main.async {
@@ -50,167 +50,7 @@ class TransferenciaViewController: UIViewController {
         barraDeBusqueda.delegate = self
 
         
-    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-
-func getTodosLosUsuarios(callback: @escaping([String]) -> Void) {
-    var dataDB:[String] = []
-    
-    self.db.collection("usuarios").whereField("correo", isNotEqualTo: self.email).addSnapshotListener { querySnapshot, err in
-        if let err = err {
-            // Alert
-            let alertController = UIAlertController(title: "Error", message: "A ocurrido un error. \(err)", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
-            
-            self.present(alertController, animated: true, completion: nil)
-            return
-        } else {
-            var cont = 0
-            for document in querySnapshot!.documents {
-                cont += 1
-                var nombre = "Sin nombre"
-                if let nombreTemp = document.data()["nombre"] {
-                    nombre = String(describing: nombreTemp)
-                }
-                
-                dataDB.append("\(nombre) - \(String(describing: document.data()["cuenta"]!))")
-                
-            }
-        }
-        callback(dataDB)
-    }
-}
-    
-    func buscarPorCuenta(callback: @escaping([String]) -> Void) {
-        var dataDB:[String] = []
-        self.db.collection("usuarios").whereField("cuenta", isEqualTo: self.cuenta).addSnapshotListener { querySnapshot, err in
-            if let err = err {
-                // Alert
-                let alertController = UIAlertController(title: "Error", message: "A ocurrido un error. \(err)", preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
-                
-                self.present(alertController, animated: true, completion: nil)
-                return
-            } else {
-                var cont = 0
-                for document in querySnapshot!.documents {
-                    cont += 1
-                    var nombre = "Sin nombre"
-                    if let nombreTemp = document.data()["nombre"] {
-                        nombre = String(describing: nombreTemp)
-                    }
-                    
-                    dataDB.append("\(nombre) - \(String(describing: document.data()["cuenta"]!))")
-                    
-                }
-            }
-            callback(dataDB)
-        }
-    }
- 
-    func buscarPorTermino(callback: @escaping([String]) -> Void) {
-        var dataDB:[String] = []
-        self.db.collection("usuarios").whereField("nombre", isEqualTo: self.barraDeBusqueda.text!).addSnapshotListener { querySnapshot, err in
-            if let err = err {
-                // Alert
-                let alertController = UIAlertController(title: "Error", message: "A ocurrido un error. \(err)", preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
-                
-                self.present(alertController, animated: true, completion: nil)
-                return
-            } else {
-                var cont = 0
-                for document in querySnapshot!.documents {
-                    cont += 1
-                    var nombre = "Sin nombre"
-                    if let nombreTemp = document.data()["nombre"] {
-                        nombre = String(describing: nombreTemp)
-                    }
-
-                    let contenidoArray = "\(nombre) - \(String(describing: document.data()["cuenta"]!))"
-                    
-                    if !dataDB.contains(contenidoArray) {
-                        if String(describing: document.data()["correo"]!) != self.email {
-                        dataDB.append(contenidoArray)
-                    }
-                    
-                }
-            }
-            }
-            callback(dataDB)
-        }
-        
-        self.db.collection("usuarios").whereField("cuenta", isEqualTo: self.barraDeBusqueda.text!).addSnapshotListener { querySnapshot, err in
-            if let err = err {
-                // Alert
-                let alertController = UIAlertController(title: "Error", message: "A ocurrido un error. \(err)", preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
-                
-                self.present(alertController, animated: true, completion: nil)
-                return
-            } else {
-                var cont = 0
-                for document in querySnapshot!.documents {
-                    cont += 1
-                    var nombre = "Sin nombre"
-                    if let nombreTemp = document.data()["nombre"] {
-                        nombre = String(describing: nombreTemp)
-                    }
-
-                    let contenidoArray = "\(nombre) - \(String(describing: document.data()["cuenta"]!))"
-                    
-                    if !dataDB.contains(contenidoArray) {
-                        if String(describing: document.data()["correo"]!) != self.email {
-                        dataDB.append(contenidoArray)
-                    }
-                    
-                }
-            }
-            }
-            callback(dataDB)
-        }
-    
-    
-    self.db.collection("usuarios").whereField("correo", isEqualTo: self.barraDeBusqueda.text!).addSnapshotListener { querySnapshot, err in
-        if let err = err {
-            // Alert
-            let alertController = UIAlertController(title: "Error", message: "A ocurrido un error. \(err)", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
-            
-            self.present(alertController, animated: true, completion: nil)
-            return
-        } else {
-            var cont = 0
-            for document in querySnapshot!.documents {
-                cont += 1
-                var nombre = "Sin nombre"
-                if let nombreTemp = document.data()["nombre"] {
-                    nombre = String(describing: nombreTemp)
-                }
-
-                let contenidoArray = "\(nombre) - \(String(describing: document.data()["cuenta"]!))"
-                
-                if !dataDB.contains(contenidoArray) {
-                    if String(describing: document.data()["correo"]!) != self.email {
-                    dataDB.append(contenidoArray)
-                }
-                
-            }
-        }
-        }
-        callback(dataDB)
-    }
-}
+    }  
 
 }
 
@@ -270,13 +110,10 @@ extension TransferenciaViewController: UISearchBarDelegate {
         // print("Busqueda: \(barraDeBusqueda.text!)")
         if barraDeBusqueda.text! == "" {
         // Alert
-        let alertController = UIAlertController(title: "Alerta", message: "Ingrese un número de cuenta ó nombre del propietario de la cuenta..", preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
-        
-        self.present(alertController, animated: true, completion: nil)
+            self.dbM.mostrarAlerta(msg: "Ingrese un número de cuenta ó nombre del propietario de la cuenta..", clase: self)
         } else {
             self.data = []
-            self.buscarPorTermino { (dataDB) in
+            self.dbM.buscarPorTermino(email: self.email, busqueda: barraDeBusqueda.text!, clase: self) { (dataDB) in
                 self.data = dataDB
                 self.tituloTabla = "Resultados - (\(self.data.count) registros)"
                 DispatchQueue.main.async {

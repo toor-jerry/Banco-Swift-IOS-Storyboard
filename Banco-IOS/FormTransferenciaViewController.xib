@@ -81,7 +81,7 @@
                                 <action selector="transferir:" destination="-1" eventType="touchUpInside" id="Gji-OL-mky"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Información de la cuenta a transferir" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J17-wJ-LOI">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Información de la cuenta a transferir" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J17-wJ-LOI">
                             <rect key="frame" x="0.0" y="168" width="382" height="34"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                             <nil key="textColor"/>

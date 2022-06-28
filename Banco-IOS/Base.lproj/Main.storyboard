@@ -32,30 +32,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ijb-lF-4VR">
-                                <rect key="frame" x="16" y="104" width="382" height="184"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ijb-lF-4VR">
+                                <rect key="frame" x="16" y="104" width="382" height="558"/>
                                 <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="dXV-gI-Wy2">
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="364"/>
+                                    </imageView>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vvj-ri-vK6">
-                                        <rect key="frame" x="0.0" y="0.0" width="382" height="40"/>
+                                        <rect key="frame" x="0.0" y="380" width="382" height="34"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" textContentType="email"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Contraseña" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9vu-Iw-m6x">
-                                        <rect key="frame" x="0.0" y="48" width="382" height="40"/>
+                                        <rect key="frame" x="0.0" y="430" width="382" height="34"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nle-tt-qDs">
-                                        <rect key="frame" x="0.0" y="96" width="382" height="40"/>
+                                        <rect key="frame" x="0.0" y="480" width="382" height="31"/>
                                         <subviews>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t4P-Uo-O0p">
-                                                <rect key="frame" x="0.0" y="4.5" width="51" height="31"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
                                                 <connections>
                                                     <action selector="recordarme:" destination="BYZ-38-t0r" eventType="valueChanged" id="Vy6-1u-MwD"/>
                                                 </connections>
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recordarme" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqR-0z-23d">
-                                                <rect key="frame" x="57" y="10" width="325" height="20.5"/>
+                                                <rect key="frame" x="57" y="5.5" width="325" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" systemColor="systemPinkColor"/>
                                                 <nil key="highlightedColor"/>
@@ -63,10 +66,10 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="kSk-37-BwZ">
-                                        <rect key="frame" x="0.0" y="144" width="382" height="40"/>
+                                        <rect key="frame" x="0.0" y="527" width="382" height="31"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bSu-0d-4dG">
-                                                <rect key="frame" x="0.0" y="4.5" width="187" height="31"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="187" height="31"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="filled" title="Registrar">
                                                     <color key="baseBackgroundColor" systemColor="systemGreenColor"/>
@@ -76,7 +79,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6JB-dp-aLk">
-                                                <rect key="frame" x="195" y="4.5" width="187" height="31"/>
+                                                <rect key="frame" x="195" y="0.0" width="187" height="31"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="filled" title="Acceder"/>
                                                 <connections>
@@ -84,19 +87,23 @@
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="kc9-ea-APo"/>
-                                        </constraints>
                                     </stackView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="kSk-37-BwZ" secondAttribute="bottom" id="hkD-3M-qjT"/>
+                                    <constraint firstItem="kSk-37-BwZ" firstAttribute="top" secondItem="nle-tt-qDs" secondAttribute="bottom" constant="16" id="vA3-0N-rJq"/>
+                                    <constraint firstItem="kSk-37-BwZ" firstAttribute="leading" secondItem="Ijb-lF-4VR" secondAttribute="leading" id="wcr-WH-3bU"/>
+                                    <constraint firstAttribute="trailing" secondItem="kSk-37-BwZ" secondAttribute="trailing" id="zH3-SZ-2YV"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Ijb-lF-4VR" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="GEV-tX-por"/>
-                            <constraint firstItem="Ijb-lF-4VR" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="MKt-yu-ocg"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ijb-lF-4VR" secondAttribute="trailing" constant="16" id="fwQ-vl-dIr"/>
+                            <constraint firstItem="Ijb-lF-4VR" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="1eZ-xg-t00"/>
+                            <constraint firstItem="Ijb-lF-4VR" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="VC4-Pq-ibW"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Ijb-lF-4VR" secondAttribute="bottom" constant="200" id="jVl-Fq-pgn"/>
+                            <constraint firstAttribute="trailing" secondItem="Ijb-lF-4VR" secondAttribute="trailing" constant="16" id="tPm-2n-alr"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="jw4-i9-SE3"/>
@@ -114,6 +121,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="logo" width="500" height="500"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

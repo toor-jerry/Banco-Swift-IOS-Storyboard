@@ -35,6 +35,11 @@ class AuthViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.db.setLogueadoBandera(loggin: false)
+    }
+    
     func validarEmail(email:String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
 
@@ -60,6 +65,7 @@ class AuthViewController: UIViewController {
                     self.db.registroBitacora(email: email, descripcionMovimiento: "Se aperturó la cuenta '\(cuenta)'", tipoMovimiento: "Creación de cuenta", complementoIdMovimiento: "0000-")
 
                     self.guardarUserDefaults()
+                    self.db.setLogueadoBandera(loggin: true)
                     // Navegando entre vistas y pasando datos en constructor
                     self.navigationController?.pushViewController(MenuViewController(email: email), animated: true)
                     // Alert
@@ -103,6 +109,7 @@ class AuthViewController: UIViewController {
                     self.db.registroBitacora(email: email, descripcionMovimiento: "Se inició sesión", tipoMovimiento: "Inicio de sesión", complementoIdMovimiento: "IN-")
                     
                     self.guardarUserDefaults()
+                    self.db.setLogueadoBandera(loggin: true)
                     // Navegando entre vistas y pasando datos en constructor
                     self.navigationController?.pushViewController(MenuViewController(email: email), animated: true)
                 } else {

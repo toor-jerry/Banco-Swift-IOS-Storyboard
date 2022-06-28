@@ -15,6 +15,7 @@
                 <outlet property="configurarPerfilButton" destination="mLK-21-eb6" id="1ZW-8B-rHr"/>
                 <outlet property="consultaSaldoButton" destination="tWu-lf-db1" id="13s-l9-zRH"/>
                 <outlet property="depositoButton" destination="FmS-EX-jlk" id="WRz-8O-5iS"/>
+                <outlet property="inversionesButton" destination="Bfl-7j-Ms6" id="uXf-IX-R8K"/>
                 <outlet property="miInformacionButton" destination="f97-lB-2R7" id="F0a-w2-y8N"/>
                 <outlet property="movimientosButton" destination="rww-Na-7j7" id="BDf-1o-LOX"/>
                 <outlet property="retiroButton" destination="6Mb-D3-5AH" id="Mwf-rD-ZhV"/>
@@ -28,17 +29,17 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="TJ1-CN-LZS">
-                    <rect key="frame" x="16" y="60" width="382" height="421"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="TJ1-CN-LZS">
+                    <rect key="frame" x="16" y="60" width="382" height="410.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PrW-te-PX8">
-                            <rect key="frame" x="0.0" y="0.0" width="382" height="31"/>
+                            <rect key="frame" x="0.0" y="0.0" width="382" height="20.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tWu-lf-db1">
-                            <rect key="frame" x="0.0" y="39" width="382" height="31"/>
+                            <rect key="frame" x="0.0" y="28.5" width="382" height="31"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="tinted" title="Consulta de saldo">
                                 <imageReference key="image" image="rectangle.and.text.magnifyingglass.rtl" catalog="system" symbolScale="default"/>
@@ -49,7 +50,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8qG-Yj-YJD">
-                            <rect key="frame" x="0.0" y="78" width="382" height="31"/>
+                            <rect key="frame" x="0.0" y="67.5" width="382" height="31"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="tinted" image="laptopcomputer.and.arrow.down" catalog="system" title="Realizar una transferencia">
                                 <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
@@ -59,14 +60,17 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bfl-7j-Ms6">
-                            <rect key="frame" x="0.0" y="117" width="382" height="31"/>
+                            <rect key="frame" x="0.0" y="106.5" width="382" height="31"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="tinted" image="dollarsign.square.fill" catalog="system" title="Realizar una inversión">
                                 <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
                             </buttonConfiguration>
+                            <connections>
+                                <action selector="invertir:" destination="-1" eventType="touchUpInside" id="WAP-QC-jT0"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FmS-EX-jlk">
-                            <rect key="frame" x="0.0" y="156" width="382" height="31"/>
+                            <rect key="frame" x="0.0" y="145.5" width="382" height="31"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="tinted" image="creditcard.and.123" catalog="system" title="Realizar un depósito">
                                 <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
@@ -76,7 +80,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Mb-D3-5AH">
-                            <rect key="frame" x="0.0" y="195" width="382" height="31"/>
+                            <rect key="frame" x="0.0" y="184.5" width="382" height="31"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="tinted" title="Realizar un retiro">
                                 <imageReference key="image" image="dollarsign.circle.fill" catalog="system" symbolScale="default"/>
@@ -87,7 +91,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rww-Na-7j7">
-                            <rect key="frame" x="0.0" y="234" width="382" height="31"/>
+                            <rect key="frame" x="0.0" y="223.5" width="382" height="31"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="tinted" image="doc.text.magnifyingglass" catalog="system" title="Ver movimientos">
                                 <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
@@ -97,14 +101,14 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="58n-s2-vrO">
-                            <rect key="frame" x="0.0" y="273" width="382" height="31"/>
+                            <rect key="frame" x="0.0" y="262.5" width="382" height="31"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="tinted" image="chart.line.uptrend.xyaxis" catalog="system" title="Ver inversiones">
                                 <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
                             </buttonConfiguration>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mLK-21-eb6">
-                            <rect key="frame" x="0.0" y="312" width="382" height="31"/>
+                            <rect key="frame" x="0.0" y="301.5" width="382" height="31"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="tinted" image="person.fill" catalog="system" title="Configurar mi perfil">
                                 <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
@@ -114,7 +118,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f97-lB-2R7">
-                            <rect key="frame" x="0.0" y="351" width="382" height="31"/>
+                            <rect key="frame" x="0.0" y="340.5" width="382" height="31"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="tinted" image="info.circle" catalog="system" title="Mi información">
                                 <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
@@ -124,7 +128,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S01-RU-3VM">
-                            <rect key="frame" x="0.0" y="390" width="382" height="31"/>
+                            <rect key="frame" x="0.0" y="379.5" width="382" height="31"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="tinted" image="rectangle.portrait.and.arrow.right.fill" catalog="system" title="Cerrar Sesión">
                                 <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
@@ -149,16 +153,16 @@
         </view>
     </objects>
     <resources>
-        <image name="chart.line.uptrend.xyaxis" catalog="system" width="128" height="101"/>
-        <image name="creditcard.and.123" catalog="system" width="128" height="90"/>
-        <image name="doc.text.magnifyingglass" catalog="system" width="107" height="128"/>
-        <image name="dollarsign.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="dollarsign.square.fill" catalog="system" width="128" height="114"/>
-        <image name="info.circle" catalog="system" width="128" height="121"/>
-        <image name="laptopcomputer.and.arrow.down" catalog="system" width="128" height="84"/>
-        <image name="person.fill" catalog="system" width="128" height="120"/>
-        <image name="rectangle.and.text.magnifyingglass.rtl" catalog="system" width="128" height="89"/>
-        <image name="rectangle.portrait.and.arrow.right.fill" catalog="system" width="128" height="108"/>
+        <image name="chart.line.uptrend.xyaxis" catalog="system" width="32" height="32"/>
+        <image name="creditcard.and.123" catalog="system" width="32" height="32"/>
+        <image name="doc.text.magnifyingglass" catalog="system" width="32" height="32"/>
+        <image name="dollarsign.circle.fill" catalog="system" width="32" height="32"/>
+        <image name="dollarsign.square.fill" catalog="system" width="32" height="32"/>
+        <image name="info.circle" catalog="system" width="32" height="32"/>
+        <image name="laptopcomputer.and.arrow.down" catalog="system" width="32" height="32"/>
+        <image name="person.fill" catalog="system" width="32" height="32"/>
+        <image name="rectangle.and.text.magnifyingglass.rtl" catalog="system" width="32" height="32"/>
+        <image name="rectangle.portrait.and.arrow.right.fill" catalog="system" width="32" height="32"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

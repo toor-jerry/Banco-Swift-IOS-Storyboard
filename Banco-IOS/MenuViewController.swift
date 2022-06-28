@@ -20,6 +20,7 @@ class MenuViewController: UIViewController {
     @IBOutlet weak var retiroButton: UIButton!
     @IBOutlet weak var movimientosButton: UIButton!
     @IBOutlet weak var transferenciaButton: UIButton!
+    @IBOutlet weak var inversionesButton: UIButton!
     
     private let email: String
     private let db = Firestore.firestore()
@@ -34,6 +35,9 @@ class MenuViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        DBManager.shared.verificarInversiones()
+
 
         // Do any additional setup after loading the view.
         title="Menú"
@@ -73,6 +77,7 @@ class MenuViewController: UIViewController {
     
     @IBAction func cerrarSesion(_ sender: Any) {
         do {
+            DBManager.shared.setLogueadoBandera(loggin: false)
             try Auth.auth().signOut()
             navigationController?.popViewController(animated: true)
         } catch {
@@ -84,6 +89,11 @@ class MenuViewController: UIViewController {
     
     @IBAction func configurarPerfil(_ sender: Any) {
         self.navigationController?.pushViewController(ConfigurarPerfilViewController(email: email), animated: true)
+    }
+    
+    
+    @IBAction func invertir(_ sender: Any) {
+        self.navigationController?.pushViewController(EmpresasViewController(email: email), animated: true)
     }
     
     @IBAction func consultarSaldo(_ sender: Any) {

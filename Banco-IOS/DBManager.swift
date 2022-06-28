@@ -17,6 +17,7 @@ final class DBManager{
     private let db = Firestore.firestore()
     private let BONO = 50000.0
     private let SALDO_BONO = 13750.0
+    private var logueado = false
     
     struct Usuario {
         var correo: String
@@ -26,6 +27,8 @@ final class DBManager{
         var bonoAsignado: Bool
         var direccion: String?
         var nombre: String?
+        var tasaRendimiento: Double?
+        var inversiones: [Inversion]?
         
         init() {
             self.correo = ""
@@ -33,9 +36,32 @@ final class DBManager{
             self.saldoCuenta = 0.0
             self.bono = 0.0
             self.bonoAsignado = false
+            self.tasaRendimiento = 0.0
         }
     }
     
+    struct Inversion {
+        var autoInvertir: Bool
+        var fechaInversion: Date?
+        var fechaRetiro: Date?
+        var gananciaAcumulada: Double
+        var inversor: String
+        var montoInvertido: Double
+        var organizacion: String
+        
+        init() {
+            self.autoInvertir = false
+            self.gananciaAcumulada = 0.0
+            self.inversor = ""
+            self.montoInvertido = 0.0
+            self.organizacion = ""
+        }
+    }
+    
+    func setLogueadoBandera(loggin: Bool) {
+        self.logueado = loggin
+    }
+        
     func getSaldoAutorizadoBono() -> Double {
         return self.SALDO_BONO
     }
@@ -63,7 +89,62 @@ final class DBManager{
             callback(dataDB)
         }
     }
- 
+    
+    func buscarInversiones(cuenta: String, clase: UIViewController, callback: @escaping([Inversion]) -> Void) {
+        var dataDB:[Inversion] = []
+        self.db.collection("inversiones").whereField("inversor", isEqualTo: cuenta).addSnapshotListener { querySnapshot, err in
+            if let err = err {
+                // Alert
+                self.mostrarAlerta(msg: "A ocurrido un error. \(err)", clase: clase, titulo: "Error")
+                return
+            } else {
+                for document in querySnapshot!.documents {
+                    var inversion = Inversion()
+                    if let autoInvertir = document.data()["autoInvertir"] as? Bool {
+                        inversion.autoInvertir = autoInvertir
+                    }
+                    
+                    if let fechaInversion = document.data()["fechaInversion"] as? Date {
+                        inversion.fechaInversion = fechaInversion
+                    }
+                    
+                    if let fechaRetiro = document.data()["fechaRetiro"] as? Date {
+                        inversion.fechaRetiro = fechaRetiro
+                    }
+                    
+                    if let gananciaAcumulada = document.data()["gananciaAcumulada"] as? Double {
+                        inversion.gananciaAcumulada = gananciaAcumulada
+                    }
+                    
+                    if let inversor = document.data()["inversor"] as? String {
+                        inversion.inversor = inversor
+                    }
+                    
+                    if let montoInvertido = document.data()["montoInvertido"] as? Double {
+                        inversion.montoInvertido = montoInvertido
+                    }
+                    
+                    if let organizacion = document.data()["organizacion"] as? String {
+                        inversion.organizacion = organizacion
+                    }
+                    dataDB.append(inversion)
+                    
+                }
+            }
+            callback(dataDB)
+        }
+    }
+    
+    func verificarInversiones() {
+        DispatchQueue.global(qos: .background).async {
+            var contador = 1
+            while self.logueado {
+                print("Data: Hola \(contador)")
+                contador += 1
+            }
+        }
+    }
+
     func busquedaDentroDeUsuarios(campo: String, email: String, busqueda: String, clase: UIViewController, callback: @escaping([String]) -> Void) {
             var dataDB:[String] = []
             self.db.collection("usuarios").whereField(campo, isEqualTo: busqueda).addSnapshotListener { querySnapshot, err in
@@ -172,6 +253,56 @@ final class DBManager{
         }
     }
     
+    func getTodasLasEmpresas(email: String, clase: UIViewController, callback: @escaping([String]) -> Void) {
+        var dataDB:[String] = []
+        
+        self.db.collection("empresas").addSnapshotListener { querySnapshot, err in
+            if let err = err {
+                // Alert
+                self.mostrarAlerta(msg: "A ocurrido un error. \(err)", clase: clase, titulo: "Error")
+                return
+            } else {
+                var cont = 0
+                for document in querySnapshot!.documents {
+                    cont += 1
+                    var nombre = "Sin nombre"
+                    if let nombreTemp = document.data()["nombre"] {
+                        nombre = String(describing: nombreTemp)
+                    }
+                    
+                    dataDB.append("\(nombre)\n\tTasa de rendimiento: \(String(describing: document.data()["tasaRendimiento"]!))%\n\tCorreo: \(String(describing: document.data()["correo"]!))")
+                    
+                }
+            }
+            callback(dataDB)
+        }
+    }
+    
+    func buscarPorTerminoEmpresas(email: String, busqueda: String, clase: UIViewController, callback: @escaping([String]) -> Void) {
+        var dataDB:[String] = []
+        self.db.collection("empresas").whereField("search", arrayContains: busqueda).addSnapshotListener { querySnapshot, err in
+            if let err = err {
+                // Alert
+                self.mostrarAlerta(msg: "A ocurrido un error. \(err)", clase: clase, titulo: "Error")
+                return
+            } else {
+                var cont = 0
+                for document in querySnapshot!.documents {
+                    cont += 1
+                    var nombre = "Sin nombre"
+                    if let nombreTemp = document.data()["nombre"] {
+                        nombre = String(describing: nombreTemp)
+                    }
+                    
+                    dataDB.append("\(nombre)\n\tTasa de rendimiento: \(String(describing: document.data()["tasaRendimiento"]!))%\n\tCorreo: \(String(describing: document.data()["correo"]!))")
+                    
+                }
+            }
+            callback(dataDB)
+        }
+        
+    }
+    
     func getInformacionUsuario(cuenta: String, clase: UIViewController, callback: @escaping([String: Any]) -> Void) {
         self.db.collection("usuarios").whereField("cuenta", isEqualTo: cuenta).getDocuments {
         (documentSnapshot, error) in
@@ -192,6 +323,7 @@ final class DBManager{
                     var bonoAsignado = false
                     var direccion = ""
                     var saldoCuenta = 0.0
+                    
                     if let nombreTemp = document.data()["nombre"] {
                         nombre = String(describing: nombreTemp)
                     }
@@ -209,9 +341,7 @@ final class DBManager{
                     
                     if let saldoCuentaTemp = document.data()["saldoCuenta"] as? Double{
                         saldoCuenta = saldoCuentaTemp
-                        }
-                    
-                    
+                    }
                     
                     callback(["nombre" :nombre,
                               "cuenta" :String(describing: document.data()["cuenta"]!),
@@ -220,6 +350,49 @@ final class DBManager{
                               "bonoAsignado": bonoAsignado,
                               "direccion": direccion,
                               "saldoCuenta": saldoCuenta
+                    ])
+                }
+                }
+            }
+         }
+    }
+    
+    func getInformacionEmpresa(correo: String, clase: UIViewController, callback: @escaping([String: Any]) -> Void) {
+        self.db.collection("empresas").whereField("correo", isEqualTo: correo).getDocuments {
+        (documentSnapshot, error) in
+            if let err = error {
+                // Alert
+                // Alert
+                self.mostrarAlerta(msg: "A ocurrido un error. \(err)", clase: clase, titulo: "Error")
+                return
+            } else {
+                if documentSnapshot!.documents.count < 0 {
+                    // Alert
+                    self.mostrarAlerta(msg: "No se ha encontrado la cuenta.", clase: clase, titulo: "Error")
+                    
+                } else {
+                for document in documentSnapshot!.documents {
+                    var nombre = "Sin nombre"
+                    var logo: String = "N/A"
+                    var tasaRendimiento: Double = 0.0
+                    
+                    if let nombreTemp = document.data()["nombre"] {
+                        nombre = String(describing: nombreTemp)
+                    }
+                    
+                    if let logoTemp = document.data()["logo"] as? String{
+                        logo = logoTemp
+                    }
+                    
+                    if let tasaRendimientoTemp = document.data()["tasaRendimiento"] as? Double{
+                        tasaRendimiento = tasaRendimientoTemp
+                    }
+                    
+                    callback(["nombre" :nombre,
+                              "cuenta" :String(describing: document.data()["cuenta"]!),
+                              "correo": correo,
+                              "logo": logo,
+                              "tasaRendimiento": tasaRendimiento
                     ])
                 }
                 }
@@ -254,6 +427,20 @@ final class DBManager{
             clase.present(alertController, animated: true, completion: nil)
         }
         
+    }
+    
+    func registrarInversion(inversiorCorreo: String, organizacion: Usuario, montoInvertido: Double, fechaRetiroGanancia: Timestamp, autoInvertir: Bool = false) {
+            self.db.collection("inversiones").document().setData([
+                "inversor": inversiorCorreo,
+                "organizacion": organizacion.correo,
+                "montoInvertido": montoInvertido,
+                "gananciaAcumulada": 0.0,
+                "fechaInversion": Timestamp(date: Date()),
+                "fechaRetiro": Timestamp(date: Date()),
+                "autoInvertir": autoInvertir
+                ])
+        
+        self.registroBitacora(email: inversiorCorreo, descripcionMovimiento: "Se realizó una inversión en la empresa \(String(describing: organizacion.nombre)), con número de cuenta \(organizacion.cuenta) y correo \(organizacion.correo), invirtiendo $ \(montoInvertido) MXN con una tasa de interés del \(String(describing: organizacion.tasaRendimiento))%", tipoMovimiento: "Inversión", complementoIdMovimiento: "Mov-Inversion-")
     }
     
     func registroBitacora(email: String, descripcionMovimiento: String, tipoMovimiento: String, complementoIdMovimiento: String = "") {

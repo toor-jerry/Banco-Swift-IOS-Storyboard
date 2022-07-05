@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
+import UserNotifications
 
 final class DBManager{
     
@@ -18,6 +19,7 @@ final class DBManager{
     private let BONO = 50000.0
     private let SALDO_BONO = 13750.0
     private var logueado = false
+    private var hilos: [DispatchWorkItem] = []
     
     struct Usuario {
         var correo: String
@@ -29,6 +31,7 @@ final class DBManager{
         var nombre: String?
         var tasaRendimiento: Double?
         var inversiones: [Inversion]?
+        var logo: String?
         
         init() {
             self.correo = ""
@@ -41,37 +44,59 @@ final class DBManager{
     }
     
     struct Inversion {
+        var _id: String
         var autoInvertir: Bool
-        var fechaInversion: Date?
-        var fechaRetiro: Date?
+        var fechaInversion: Timestamp
+        var fechaRetiro: Timestamp
         var gananciaAcumulada: Double
         var inversor: String
         var montoInvertido: Double
-        var organizacion: String
+        var organizacion: Usuario?
         
         init() {
+            self._id = ""
             self.autoInvertir = false
             self.gananciaAcumulada = 0.0
             self.inversor = ""
             self.montoInvertido = 0.0
-            self.organizacion = ""
+            self.fechaInversion = Timestamp()
+            self.fechaRetiro = Timestamp()
         }
     }
     
     func setLogueadoBandera(loggin: Bool) {
         self.logueado = loggin
     }
+    
+    func getLogueadoBandera() -> Bool {
+        return self.logueado
+    }
+
         
     func getSaldoAutorizadoBono() -> Double {
         return self.SALDO_BONO
     }
-    
+    func cerrarSesion() ->Bool {
+        var sesionCerrada = false
+        if self.getLogueadoBandera() {
+        do {
+            self.setLogueadoBandera(loggin: false)
+            self.limpiezaDeHilos()
+            try Auth.auth().signOut()
+            sesionCerrada = true
+        }  catch let signOutError as NSError {
+            self.setLogueadoBandera(loggin: true)
+            print("Data Error signing out: %@", signOutError)
+          }
+        }
+        return sesionCerrada
+    }
     func buscarPorCuenta(cuenta: String, clase: UIViewController, callback: @escaping([String]) -> Void) {
         var dataDB:[String] = []
         self.db.collection("usuarios").whereField("cuenta", isEqualTo: cuenta).addSnapshotListener { querySnapshot, err in
             if let err = err {
                 // Alert
-                self.mostrarAlerta(msg: "A ocurrido un error. \(err)", clase: clase, titulo: "Error")
+                self.mostrarAlerta(msg: "A ocurrido un error buscando por cuenta. \(err)", clase: clase, titulo: "Error")
                 return
             } else {
                 var cont = 0
@@ -90,44 +115,55 @@ final class DBManager{
         }
     }
     
-    func buscarInversiones(cuenta: String, clase: UIViewController, callback: @escaping([Inversion]) -> Void) {
+    func buscarInversionesPorCorreoObject(correoInversor: String, clase: UIViewController, callback: @escaping([Inversion]) -> Void) {
         var dataDB:[Inversion] = []
-        self.db.collection("inversiones").whereField("inversor", isEqualTo: cuenta).addSnapshotListener { querySnapshot, err in
+        var empresas:[Usuario] = []
+        print("Data \(correoInversor)")
+        self.getTodosLosUsuariosObj(email: correoInversor, collection: "empresas", clase: clase) { (empresasDB) in
+            empresas = empresasDB
+        }
+        
+        self.db.collection("inversiones").whereField("emailInversor", isEqualTo: correoInversor).addSnapshotListener { querySnapshot, err in
             if let err = err {
                 // Alert
-                self.mostrarAlerta(msg: "A ocurrido un error. \(err)", clase: clase, titulo: "Error")
+                self.mostrarAlerta(msg: "A ocurrido un error buscando las inversiones. \(err)", clase: clase, titulo: "Error")
                 return
             } else {
-                for document in querySnapshot!.documents {
+                for documentInversion in querySnapshot!.documents {
                     var inversion = Inversion()
-                    if let autoInvertir = document.data()["autoInvertir"] as? Bool {
+                    if let organizacion = documentInversion.data()["organizacion"] as? DocumentReference{
+                        let empresa = empresas.filter { $0.correo == organizacion.documentID }
+                        if !empresa.isEmpty{
+                            inversion.organizacion = empresa[0]
+                        }
+                        }
+                    
+                    inversion._id = documentInversion.documentID
+                       
+                    if let autoInvertir = documentInversion.data()["autoInvertir"] as? Bool {
                         inversion.autoInvertir = autoInvertir
                     }
                     
-                    if let fechaInversion = document.data()["fechaInversion"] as? Date {
+                    if let fechaInversion = documentInversion.data()["fechaInversion"] as? Timestamp {
                         inversion.fechaInversion = fechaInversion
                     }
                     
-                    if let fechaRetiro = document.data()["fechaRetiro"] as? Date {
+                    if let fechaRetiro = documentInversion.data()["fechaRetiro"] as? Timestamp {
                         inversion.fechaRetiro = fechaRetiro
                     }
                     
-                    if let gananciaAcumulada = document.data()["gananciaAcumulada"] as? Double {
+                    if let gananciaAcumulada = documentInversion.data()["gananciaAcumulada"] as? Double {
                         inversion.gananciaAcumulada = gananciaAcumulada
                     }
                     
-                    if let inversor = document.data()["inversor"] as? String {
+                    if let inversor = documentInversion.data()["inversor"] as? String {
                         inversion.inversor = inversor
                     }
                     
-                    if let montoInvertido = document.data()["montoInvertido"] as? Double {
+                    if let montoInvertido = documentInversion.data()["montoInvertido"] as? Double {
                         inversion.montoInvertido = montoInvertido
                     }
-                    
-                    if let organizacion = document.data()["organizacion"] as? String {
-                        inversion.organizacion = organizacion
-                    }
-                    dataDB.append(inversion)
+                dataDB.append(inversion)
                     
                 }
             }
@@ -135,14 +171,110 @@ final class DBManager{
         }
     }
     
-    func verificarInversiones() {
-        DispatchQueue.global(qos: .background).async {
-            var contador = 1
-            while self.logueado {
-                print("Data: Hola \(contador)")
-                contador += 1
+    func verificarInversiones(correoUserLogueado: String, clase: UIViewController) {
+        // Timestamp(date: fechaRetiroGanancia).compare(Timestamp(date: Date())) != .orderedAscending
+        let fecha = Date()
+        var inversiones: [String: Inversion] = [:]
+        self.buscarInversionesPorCorreoObject(correoInversor: correoUserLogueado, clase: clase) { (dataDB) in
+            for data in dataDB {
+                if (inversiones[data._id] == nil) {
+                    inversiones[data._id] = data
+                    //print("Data intervalo \(DateInterval(start: .now, end: data.fechaRetiro.dateValue()).duration)")
+                }
             }
+            // print("Data inversiones \(String(describing: inversiones)) Total Inversiones: \(inversiones.count)")
         }
+        print("Data Fecha actual: \(fecha)\n")
+        var data: [Date] = []
+        data.append(fecha.addingTimeInterval(60))
+        data.append(fecha.addingTimeInterval(50))
+        data.append(fecha.addingTimeInterval(40))
+        data.append(fecha.addingTimeInterval(120000000))
+        data.append(fecha.addingTimeInterval(1))
+        data.append(fecha.addingTimeInterval(6))
+        data.append(fecha.addingTimeInterval(10))
+        data.append(fecha.addingTimeInterval(16))
+        data.append(fecha.addingTimeInterval(29))
+        data.append(fecha.addingTimeInterval(20))
+        data.append(fecha.addingTimeInterval(-10)) // ya no aplica
+
+        print("Data NO Ordenada: \(data)\n")
+
+        data = data.sorted()
+        print("Data ORDENADA: \(data)\n")
+
+        for (index, date) in data.enumerated() {
+            
+            // Si ya se cumplió el lapso de tiempo
+          if fecha.compare(date) == .orderedDescending {
+              /*
+               //////////////////////////////////////
+                 let tiempoDeInversion = DateInterval(start: fechaInversion, end: fechaRetiro).duration
+                 let tiempoSuperado = DateInterval(start: fechaInversion, end: Date()).duration
+               
+               print("----- Se paso por \(DateInterval(start: fechaInversion, end: Date()).duration)\n\n")
+               return Int(tiempoSuperado/tiempoDeInversi
+               */
+              data.remove(at: index)
+              
+          } else {
+              let segundos =  DateInterval(start: fecha, end: date).duration
+            print("Data ***\(segundos)")
+              let workItem = DispatchWorkItem {
+                  self.mostrarLocalNotificacion(titulo: "Inversión terminada", subtitulo: "terminada", contenidoNotificacion: "\(segundos)")
+                  print("Data Hola \(segundos)")
+              }
+              self.hilos.append(workItem)
+
+              // Execute the work item after "segundos" second
+             // DispatchQueue.main.asyncAfter(deadline: .now() + segundos, execute: workItem)
+
+                }
+            // Eliminar DispatchQueue.main.async {
+               //  self.endBackgroundUpdateTask(taskID: taskID)
+            // }
+        }
+    }
+    
+
+    
+    func limpiezaDeHilos() {
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+        print("Data Hilos a eliminar: \(self.hilos)")
+            for hilo in self.hilos {
+                hilo.cancel()
+                if hilo.isCancelled {
+                    print("Data: Hilo \(hilo) cancelado satisfactoriamente!")
+                }
+            }
+            self.hilos.removeAll()
+            print("Data: Hilos despues de eliminar: \(self.hilos)")
+        }
+    }
+    
+    func mostrarLocalNotificacion(titulo: String, subtitulo: String, contenidoNotificacion: String, retardoDeMostrarNotificacion: Double = 1.0){
+        // 1. Creamos el Trigger de la Notificación
+           let trigger = UNTimeIntervalNotificationTrigger(timeInterval: retardoDeMostrarNotificacion, repeats: false)
+         
+           // 2. Creamos el contenido de la Notificación
+           let content = UNMutableNotificationContent()
+           content.title = titulo
+           content.subtitle = subtitulo
+           content.body = contenidoNotificacion
+             content.sound = UNNotificationSound.default
+            content.userInfo["data"] = "userInfo"
+         
+           // 3. Creamos la Request
+           let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+         
+           // 4. Añadimos la Request al Centro de Notificaciones
+           UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+           UNUserNotificationCenter.current().add(request) {(error) in
+              if let error = error {
+                 print("Se ha producido un error: \(error)")
+              }
+           }
     }
 
     func busquedaDentroDeUsuarios(campo: String, email: String, busqueda: String, clase: UIViewController, callback: @escaping([String]) -> Void) {
@@ -150,7 +282,7 @@ final class DBManager{
             self.db.collection("usuarios").whereField(campo, isEqualTo: busqueda).addSnapshotListener { querySnapshot, err in
                 if let err = err {
                     // Alert
-                    self.mostrarAlerta(msg: "A ocurrido un error. \(err)", clase: clase, titulo: "Error")
+                    self.mostrarAlerta(msg: "A ocurrido un error buscando al usuario. \(err)", clase: clase, titulo: "Error")
                     return
                 } else {
                     var cont = 0
@@ -226,13 +358,60 @@ final class DBManager{
         
     }
     
+    func getTodosLosUsuariosObj(email: String, collection: String = "Usuarios", clase: UIViewController, callback: @escaping([Usuario]) -> Void) {
+        var dataDB:[Usuario] = []
+        self.db.collection(collection).addSnapshotListener { querySnapshot, err in
+            if let err = err {
+                // Alert
+                self.mostrarAlerta(msg: "A ocurrido un error buscando al usuario por obj. \(err)", clase: clase, titulo: "Error")
+                return
+            } else {
+                for document in querySnapshot!.documents {
+                    var usuario = Usuario()
+                    usuario.cuenta = String(describing: document.data()["cuenta"]!)
+                    usuario.correo = String(describing:document.data()["correo"]!)
+  
+                    
+                    if let nombreTemp = document.data()["nombre"] {
+                        usuario.nombre = String(describing: nombreTemp)
+                    }
+                    if let bonoTemp = document.data()["bono"] as? Double {
+                        usuario.bono = bonoTemp
+                    }
+                    
+                    if let bonoATemp = document.data()["bonoAsignado"] as? Bool{
+                        usuario.bonoAsignado = bonoATemp
+                    }
+                    
+                    if let direccionTemp = document.data()["direccion"] as? String{
+                        usuario.direccion = direccionTemp
+                    }
+                    
+                    if let saldoCuentaTemp = document.data()["saldoCuenta"] as? Double{
+                        usuario.saldoCuenta = saldoCuentaTemp
+                    }
+                    if let logoTemp = document.data()["logo"] as? String{
+                        usuario.logo = logoTemp
+                    }
+                    if let tasa = document.data()["tasaRendimiento"] as? Double{
+                        usuario.tasaRendimiento = tasa
+                    }
+                    
+                    dataDB.append(usuario)
+                }
+                }
+                    callback(dataDB)
+        }
+    }
+    
+    
     func getTodosLosUsuarios(email: String, clase: UIViewController, callback: @escaping([String]) -> Void) {
         var dataDB:[String] = []
         
         self.db.collection("usuarios").whereField("correo", isNotEqualTo: email).addSnapshotListener { querySnapshot, err in
             if let err = err {
                 // Alert
-                self.mostrarAlerta(msg: "A ocurrido un error. \(err)", clase: clase, titulo: "Error")
+                self.mostrarAlerta(msg: "A ocurrido un error obteniendo todos los usuairos. \(err)", clase: clase, titulo: "Error")
                 return
             } else {
                 var cont = 0
@@ -253,13 +432,13 @@ final class DBManager{
         }
     }
     
-    func getTodasLasEmpresas(email: String, clase: UIViewController, callback: @escaping([String]) -> Void) {
+    func getTodasLasEmpresas(clase: UIViewController, callback: @escaping([String]) -> Void) {
         var dataDB:[String] = []
         
         self.db.collection("empresas").addSnapshotListener { querySnapshot, err in
             if let err = err {
                 // Alert
-                self.mostrarAlerta(msg: "A ocurrido un error. \(err)", clase: clase, titulo: "Error")
+                self.mostrarAlerta(msg: "A ocurrido un error obteniendo todas las empresas. \(err)", clase: clase, titulo: "Error")
                 return
             } else {
                 var cont = 0
@@ -283,7 +462,7 @@ final class DBManager{
         self.db.collection("empresas").whereField("search", arrayContains: busqueda).addSnapshotListener { querySnapshot, err in
             if let err = err {
                 // Alert
-                self.mostrarAlerta(msg: "A ocurrido un error. \(err)", clase: clase, titulo: "Error")
+                self.mostrarAlerta(msg: "A ocurrido un error buscando por término. \(err)", clase: clase, titulo: "Error")
                 return
             } else {
                 var cont = 0
@@ -302,14 +481,64 @@ final class DBManager{
         }
         
     }
+    func getInformacionDeTodosLosUsuarios(clase: UIViewController, callback: @escaping([Usuario]) -> Void) {
+        var usuarios: [Usuario] = []
+        self.db.collection("usuarios").getDocuments {
+        (documentSnapshot, error) in
+            if let err = error {
+                // Alert
+                self.mostrarAlerta(msg: "A ocurrido un error obteniendo la información de todos los usuarios. \(err)", clase: clase, titulo: "Error")
+                return
+            } else {
+                if documentSnapshot!.documents.count < 0 {
+                    // Alert
+                    self.mostrarAlerta(msg: "No se han encontrado usuarios.", clase: clase, titulo: "Error")
+                    
+                } else {
+                    
+                for document in documentSnapshot!.documents {
+                    var usuario = Usuario()
+                    usuario.correo = String(describing:document.data()["correo"]!)
+                    usuario.cuenta = String(describing: document.data()["cuenta"]!)
+                    usuario.nombre = "Sin nombre"
+                    
+                    if let nombreTemp = document.data()["nombre"] {
+                        usuario.nombre = String(describing: nombreTemp)
+                    }
+                    if let bonoTemp = document.data()["bono"] as? Double {
+                        usuario.bono = bonoTemp
+                    }
+                    
+                    if let bonoATemp = document.data()["bono"] as? Bool{
+                        usuario.bonoAsignado = bonoATemp
+                    }
+                    
+                    if let direccionTemp = document.data()["direccion"] as? String{
+                        usuario.direccion = direccionTemp
+                    }
+                    
+                    if let saldoCuentaTemp = document.data()["saldoCuenta"] as? Double{
+                        usuario.saldoCuenta = saldoCuentaTemp
+                    }
+                    if let logoTemp = document.data()["logo"] as? String{
+                        usuario.logo = logoTemp
+                    }
+                    usuarios.append(usuario)
+                }
+                }
+                callback(usuarios)
+            }
+         }
+    }
     
-    func getInformacionUsuario(cuenta: String, clase: UIViewController, callback: @escaping([String: Any]) -> Void) {
-        self.db.collection("usuarios").whereField("cuenta", isEqualTo: cuenta).getDocuments {
+    func getInformacionUsuarioPorCuentaCorreo(cuentaOCorreo: String, clase: UIViewController, campo: String = "cuenta", coleccion: String = "usuarios", callback: @escaping(Usuario) -> Void) {
+        var usuario = Usuario()
+        self.db.collection("usuarios").whereField(campo, isEqualTo: cuentaOCorreo).getDocuments {
         (documentSnapshot, error) in
             if let err = error {
                 // Alert
                 // Alert
-                self.mostrarAlerta(msg: "A ocurrido un error. \(err)", clase: clase, titulo: "Error")
+                self.mostrarAlerta(msg: "A ocurrido un error obteniendo la información del usuairo por cuenta o correo. \(err)", clase: clase, titulo: "Error")
                 return
             } else {
                 if documentSnapshot!.documents.count < 0 {
@@ -318,52 +547,48 @@ final class DBManager{
                     
                 } else {
                 for document in documentSnapshot!.documents {
-                    var nombre = "Sin nombre"
-                    var bono = 0.0
-                    var bonoAsignado = false
-                    var direccion = ""
-                    var saldoCuenta = 0.0
+                    usuario.cuenta = String(describing: document.data()["cuenta"]!)
+                    usuario.correo = String(describing:document.data()["correo"]!)
                     
                     if let nombreTemp = document.data()["nombre"] {
-                        nombre = String(describing: nombreTemp)
+                        usuario.nombre = String(describing: nombreTemp)
                     }
                     if let bonoTemp = document.data()["bono"] as? Double {
-                    bono = bonoTemp
+                        usuario.bono = bonoTemp
                     }
                     
-                    if let bonoATemp = document.data()["bono"] as? Bool{
-                    bonoAsignado = bonoATemp
+                    if let bonoATemp = document.data()["bonoAsignado"] as? Bool{
+                        usuario.bonoAsignado = bonoATemp
                     }
                     
                     if let direccionTemp = document.data()["direccion"] as? String{
-                    direccion = direccionTemp
+                        usuario.direccion = direccionTemp
                     }
                     
                     if let saldoCuentaTemp = document.data()["saldoCuenta"] as? Double{
-                        saldoCuenta = saldoCuentaTemp
+                        usuario.saldoCuenta = saldoCuentaTemp
                     }
-                    
-                    callback(["nombre" :nombre,
-                              "cuenta" :String(describing: document.data()["cuenta"]!),
-                              "correo": String(describing:document.data()["correo"]!),
-                              "bono": bono,
-                              "bonoAsignado": bonoAsignado,
-                              "direccion": direccion,
-                              "saldoCuenta": saldoCuenta
-                    ])
+                    if let logoTemp = document.data()["logo"] as? String{
+                        usuario.logo = logoTemp
+                    }
+                    if let tasa = document.data()["tasaRendimiento"] as? Double{
+                        usuario.tasaRendimiento = tasa
+                    }
                 }
                 }
+                callback(usuario)
             }
          }
     }
     
-    func getInformacionEmpresa(correo: String, clase: UIViewController, callback: @escaping([String: Any]) -> Void) {
+    func getInformacionEmpresa(correo: String, clase: UIViewController, callback: @escaping(Usuario) -> Void) {
+        var empresa = Usuario()
         self.db.collection("empresas").whereField("correo", isEqualTo: correo).getDocuments {
         (documentSnapshot, error) in
             if let err = error {
                 // Alert
                 // Alert
-                self.mostrarAlerta(msg: "A ocurrido un error. \(err)", clase: clase, titulo: "Error")
+                self.mostrarAlerta(msg: "A ocurrido un error obteniendo la informacion de empresa por correo. \(err)", clase: clase, titulo: "Error")
                 return
             } else {
                 if documentSnapshot!.documents.count < 0 {
@@ -371,29 +596,21 @@ final class DBManager{
                     self.mostrarAlerta(msg: "No se ha encontrado la cuenta.", clase: clase, titulo: "Error")
                     
                 } else {
-                for document in documentSnapshot!.documents {
-                    var nombre = "Sin nombre"
-                    var logo: String = "N/A"
-                    var tasaRendimiento: Double = 0.0
+                for document in documentSnapshot!.documents {                    empresa.correo = String(describing: document.data()["cuenta"]!)
                     
                     if let nombreTemp = document.data()["nombre"] {
-                        nombre = String(describing: nombreTemp)
+                        empresa.nombre = String(describing: nombreTemp)
                     }
                     
                     if let logoTemp = document.data()["logo"] as? String{
-                        logo = logoTemp
+                        empresa.logo = logoTemp
                     }
                     
                     if let tasaRendimientoTemp = document.data()["tasaRendimiento"] as? Double{
-                        tasaRendimiento = tasaRendimientoTemp
+                        empresa.tasaRendimiento = tasaRendimientoTemp
                     }
                     
-                    callback(["nombre" :nombre,
-                              "cuenta" :String(describing: document.data()["cuenta"]!),
-                              "correo": correo,
-                              "logo": logo,
-                              "tasaRendimiento": tasaRendimiento
-                    ])
+                    callback(empresa)
                 }
                 }
             }
@@ -429,14 +646,15 @@ final class DBManager{
         
     }
     
-    func registrarInversion(inversiorCorreo: String, organizacion: Usuario, montoInvertido: Double, fechaRetiroGanancia: Timestamp, autoInvertir: Bool = false) {
+    func registrarInversion(inversiorCorreo: String, organizacion: Usuario, montoInvertido: Double, fechaRetiroGanancia: Date, autoInvertir: Bool = false) {
             self.db.collection("inversiones").document().setData([
-                "inversor": inversiorCorreo,
-                "organizacion": organizacion.correo,
+                "inversor": self.db.document("usuarios/"+inversiorCorreo),
+                "emailInversor": inversiorCorreo,
+                "organizacion": self.db.document("empresas/"+organizacion.correo),
                 "montoInvertido": montoInvertido,
                 "gananciaAcumulada": 0.0,
                 "fechaInversion": Timestamp(date: Date()),
-                "fechaRetiro": Timestamp(date: Date()),
+                "fechaRetiro": Timestamp(date: fechaRetiroGanancia),
                 "autoInvertir": autoInvertir
                 ])
         
@@ -478,8 +696,9 @@ final class DBManager{
     func mostrarAlerta(msg: String, clase: UIViewController, titulo: String = "Alerta!") {
         let alertController = UIAlertController(title: titulo, message: msg, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
-        
+        clase.viewDidLoad()
         clase.present(alertController, animated: true, completion: nil)
+        
     }
     
  

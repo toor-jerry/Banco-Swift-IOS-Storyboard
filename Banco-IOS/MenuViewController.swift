@@ -8,8 +8,9 @@
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
+import UserNotifications
 
-class MenuViewController: UIViewController {
+class MenuViewController: UIViewController, UNUserNotificationCenterDelegate {
 
     @IBOutlet weak var usuarioLabel: UILabel!
     @IBOutlet weak var cerrarSesionButton: UIButton!
@@ -36,9 +37,9 @@ class MenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        DBManager.shared.verificarInversiones()
-
-
+        UNUserNotificationCenter.current().delegate = self
+        
+            DBManager.shared.verificarInversiones(correoUserLogueado: self.email, clase: self)
         // Do any additional setup after loading the view.
         title="Menú"
         db.collection("usuarios").document(email).getDocument {
@@ -74,14 +75,20 @@ class MenuViewController: UIViewController {
         
             }
     }
+    // Permite mostrar las notificación cuando la aplicación se encuentra en primer plano
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        // let userInfo = notification.request.content.subtitle
+        print("Data userinfo en menu \(notification.request.content.userInfo["data"])")
+        DBManager.shared.mostrarAlerta(msg: "ss", clase: self)
+        completionHandler([.banner, .sound])
+    }
     
     @IBAction func cerrarSesion(_ sender: Any) {
-        do {
-            DBManager.shared.setLogueadoBandera(loggin: false)
-            try Auth.auth().signOut()
+        if DBManager.shared.cerrarSesion() {
             navigationController?.popViewController(animated: true)
-        } catch {
-            // Manejo de errores si no se pudo salir de la sesion (alerta)
         }
         
         
@@ -121,6 +128,11 @@ class MenuViewController: UIViewController {
     
     @IBAction func tranfererir(_ sender: Any) {
         self.navigationController?.pushViewController(TransferenciaViewController(email: email), animated: true)
+    }
+    
+    
+    @IBAction func verInversiones(_ sender: Any) {
+        self.navigationController?.pushViewController(InversionesViewController(email: email), animated: true)
     }
     /*
     // MARK: - Navigation

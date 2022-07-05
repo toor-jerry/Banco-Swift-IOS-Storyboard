@@ -1,43 +1,48 @@
 //
-//  FormInversionViewController.swift
+//  InversionViewController.swift
 //  Banco-IOS
 //
-//  Created by user216116 on 27/06/22.
+//  Created by user216116 on 01/07/22.
 //
 
+import UIKit
 import UIKit
 import FirebaseFirestore
 import Kingfisher
 
-class FormInversionViewController: UIViewController {
+class InversionViewController: UIViewController {
 
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var invertirButton: UIButton!
-    @IBOutlet weak var nombreLabel: UILabel!
-    @IBOutlet weak var saldoLabel: UILabel!
-    @IBOutlet weak var bonoLabel: UILabel!
-    @IBOutlet weak var saldoTotalLabel: UILabel!
-    @IBOutlet weak var montoTextField: UITextField!
-    @IBOutlet weak var correoEmpresaLabel: UILabel!
-    @IBOutlet weak var tasaLabel: UILabel!
     @IBOutlet weak var fechaDatePicker: UIDatePicker!
-    @IBOutlet weak var ayudaButton: UIButton!
     @IBOutlet weak var inversionAutomaticaSwitch: UISwitch!
-    
+    @IBOutlet weak var ayudaButton: UIButton!
+    @IBOutlet weak var tasaLabel: UILabel!
+    @IBOutlet weak var correoEmpresaLabel: UILabel!
+    @IBOutlet weak var montoTextField: UITextField!
+    @IBOutlet weak var saldoTotalLabel: UILabel!
+    @IBOutlet weak var bonoLabel: UILabel!
+    @IBOutlet weak var saldoLabel: UILabel!
+    @IBOutlet weak var nombreLabel: UILabel!
+    @IBOutlet weak var gananciaLabel: UILabel!
+    @IBOutlet weak var montoOriginalLabel: UILabel!
     
     private let db = Firestore.firestore()
     private let dbM = DBManager.shared
     
     private var usuario = DBManager.Usuario()
     private var empresa = DBManager.Usuario()
+    private var inversion: DBManager.Inversion
     private let email: String
-    private let correoEmpresa: String
  
     
     
-    init(email: String, correoEmpresa: String) {
+    init(email: String, inversion: DBManager.Inversion) {
         self.email = email
-        self.correoEmpresa = correoEmpresa
+        self.inversion = inversion
+        if let empresa = inversion.organizacion {
+            self.empresa = empresa
+        }
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -48,65 +53,39 @@ class FormInversionViewController: UIViewController {
         super.viewDidLoad()
         title = "Realizar inversión"
         // Do any additional setup after loading the view.
-        self.usuario.correo = self.email
-        self.empresa.correo = self.correoEmpresa
         
         // Usuario logueado
-        db.collection("usuarios").document(self.usuario.correo).getDocument {
-        (documentSnapshot, error) in
-            if let document = documentSnapshot, error == nil {
-                if let nombre = document.get("nombre") as? String {                    self.usuario.nombre = nombre
-                } else {
+        self.dbM.getInformacionUsuarioPorCuentaCorreo(cuentaOCorreo: self.email, clase: self, campo: "correo") { (usuarioDB) in
+            self.usuario = usuarioDB
+            if self.usuario.nombre == "" {
                     self.nombreLabel.text = self.usuario.correo
-                }
-                if let saldo = document.get("saldoCuenta") as? Double {
-                    self.saldoLabel.text = String(saldo)
-                    self.usuario.saldoCuenta = saldo
-                } else {
-                    self.saldoLabel.text = "Error"
-                }
-                
-                if let cuenta = document.get("cuenta") as? String {
-                    self.usuario.cuenta = cuenta
-                }
-                
-                if let bonoAsignado =  document.get("bonoAsignado") as? Bool {
-                    self.usuario.bonoAsignado = bonoAsignado
-                }
-                
-                if let bono =  document.get("bono") as? Double {
-                    self.usuario.bono = bono
-                    self.bonoLabel.text = "Monto del bono disponible: $ \(String(bono)) MXN"
-                    if self.usuario.bonoAsignado && bono > 0.0 {
+            }
+            
+            self.saldoLabel.text = String(self.usuario.saldoCuenta)
+            self.bonoLabel.text = "Monto del bono disponible: $ \(String(self.usuario.bono)) MXN"
+            self.montoOriginalLabel.text = "Monto original invertido: $ \(self.inversion.montoInvertido) MXN"
+            self.gananciaLabel.text = "Ganancias $ \(self.inversion.gananciaAcumulada) MXN"
+            if self.usuario.bonoAsignado && self.usuario.bono > 0.0 {
                         
                         self.bonoLabel.isHidden = false
                         self.saldoTotalLabel.isHidden = false
-                        self.saldoTotalLabel.text = "Saldo Total: $ \(self.usuario.saldoCuenta + bono)"
-                    }
-                    
-                }
+                self.saldoTotalLabel.text = "Saldo Total: $ \(self.usuario.saldoCuenta + self.usuario.bono)"
                 
             }
          }
+        
+        if self.empresa.logo == "" {
+            self.logoImageView.isHidden = true
+        } else {
+            self.logoImageView.kf.setImage(with: URL(string: self.empresa.logo ?? ""))
+        }
+        
         // Información del usuario a transferir
-        self.dbM.getInformacionEmpresa(correo: self.empresa.correo, clase: self, callback: { (usuario) in
-            self.empresa = usuario
-            
-            if usuario.logo == "" {
-                self.logoImageView.isHidden = true
-            } else {
-                self.logoImageView.kf.setImage(with: URL(string: usuario.logo ?? ""))
-            }
-            
-            self.correoEmpresaLabel.text = usuario.correo
-            
-            self.nombreLabel.text = usuario.nombre
-            self.tasaLabel.text = "Tasa de rendimiento (diaria): \((usuario.tasaRendimiento ?? 0.0) * 100)%"
-            
-        })
+        self.correoEmpresaLabel.text = self.empresa.correo
         
-        
-        
+        self.nombreLabel.text = self.empresa.nombre
+        self.tasaLabel.text = "Tasa de rendimiento (diaria): \((self.empresa.tasaRendimiento ?? 0.0) * 100)%"
+ 
     }
 
     @IBAction func invertir(_ sender: Any) {
@@ -192,3 +171,4 @@ class FormInversionViewController: UIViewController {
         }
     }
     }
+

@@ -13,8 +13,12 @@
 		5F0D4A4A2869FFFD002948FB /* FormInversionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0D4A492869FFFD002948FB /* FormInversionViewController.swift */; };
 		5F0D4A4C286A000E002948FB /* FormInversionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F0D4A4B286A000E002948FB /* FormInversionViewController.xib */; };
 		5F0D4A4F286A03C5002948FB /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 5F0D4A4E286A03C5002948FB /* Kingfisher */; };
+		5F2C98A1286ABF2A00D31F0A /* InversionesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2C98A0286ABF2A00D31F0A /* InversionesViewController.swift */; };
+		5F2C98A5286AC03700D31F0A /* InversionesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F2C98A4286AC03700D31F0A /* InversionesViewController.xib */; };
 		5F3A60832858335C00E15ACE /* TransferenciaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A60822858335C00E15ACE /* TransferenciaViewController.swift */; };
 		5F3A60852858337200E15ACE /* TransferenciaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F3A60842858337200E15ACE /* TransferenciaViewController.xib */; };
+		5F52D483286B3A0900DA1311 /* CeldaPersonalizadaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F52D481286B3A0900DA1311 /* CeldaPersonalizadaTableViewCell.swift */; };
+		5F52D484286B3A0900DA1311 /* CeldaPersonalizadaTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F52D482286B3A0900DA1311 /* CeldaPersonalizadaTableViewCell.xib */; };
 		5F558000285279C800C202AB /* MiInformacionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F557FFF285279C800C202AB /* MiInformacionViewController.swift */; };
 		5F558002285279E400C202AB /* MiInformacionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F558001285279E400C202AB /* MiInformacionViewController.xib */; };
 		5F5927D52864ADEC00F4D242 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5927D42864ADEC00F4D242 /* DBManager.swift */; };
@@ -29,6 +33,8 @@
 		5F72C75B285117EA00A7E610 /* Banco_IOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F72C75A285117EA00A7E610 /* Banco_IOSUITestsLaunchTests.swift */; };
 		5F76A1D9285387530019544B /* MovimientosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F76A1D8285387530019544B /* MovimientosViewController.swift */; };
 		5F76A1DB285387630019544B /* MovimientosViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F76A1DA285387630019544B /* MovimientosViewController.xib */; };
+		5F8B012A286F2C09006F76AE /* InversionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8B0128286F2C09006F76AE /* InversionViewController.swift */; };
+		5F8B012B286F2C09006F76AE /* InversionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F8B0129286F2C09006F76AE /* InversionViewController.xib */; };
 		5F98D6B42851A7F700F1214F /* ConsultaSaldoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F98D6B32851A7F700F1214F /* ConsultaSaldoViewController.swift */; };
 		5F98D6B62851A85000F1214F /* ConsultaSaldoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F98D6B52851A85000F1214F /* ConsultaSaldoViewController.xib */; };
 		5FB47404286651AD00639DD0 /* EmpresasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB47403286651AD00639DD0 /* EmpresasViewController.swift */; };
@@ -78,8 +84,12 @@
 		5F07C2AE285B9AD000275124 /* FormTransferenciaViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FormTransferenciaViewController.xib; sourceTree = "<group>"; };
 		5F0D4A492869FFFD002948FB /* FormInversionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormInversionViewController.swift; sourceTree = "<group>"; };
 		5F0D4A4B286A000E002948FB /* FormInversionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FormInversionViewController.xib; sourceTree = "<group>"; };
+		5F2C98A0286ABF2A00D31F0A /* InversionesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InversionesViewController.swift; sourceTree = "<group>"; };
+		5F2C98A4286AC03700D31F0A /* InversionesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InversionesViewController.xib; sourceTree = "<group>"; };
 		5F3A60822858335C00E15ACE /* TransferenciaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferenciaViewController.swift; sourceTree = "<group>"; };
 		5F3A60842858337200E15ACE /* TransferenciaViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransferenciaViewController.xib; sourceTree = "<group>"; };
+		5F52D481286B3A0900DA1311 /* CeldaPersonalizadaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CeldaPersonalizadaTableViewCell.swift; sourceTree = "<group>"; };
+		5F52D482286B3A0900DA1311 /* CeldaPersonalizadaTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CeldaPersonalizadaTableViewCell.xib; sourceTree = "<group>"; };
 		5F557FFF285279C800C202AB /* MiInformacionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiInformacionViewController.swift; sourceTree = "<group>"; };
 		5F558001285279E400C202AB /* MiInformacionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MiInformacionViewController.xib; sourceTree = "<group>"; };
 		5F5927D42864ADEC00F4D242 /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
@@ -98,6 +108,8 @@
 		5F72C75A285117EA00A7E610 /* Banco_IOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banco_IOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5F76A1D8285387530019544B /* MovimientosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovimientosViewController.swift; sourceTree = "<group>"; };
 		5F76A1DA285387630019544B /* MovimientosViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovimientosViewController.xib; sourceTree = "<group>"; };
+		5F8B0128286F2C09006F76AE /* InversionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InversionViewController.swift; sourceTree = "<group>"; };
+		5F8B0129286F2C09006F76AE /* InversionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InversionViewController.xib; sourceTree = "<group>"; };
 		5F98D6B32851A7F700F1214F /* ConsultaSaldoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultaSaldoViewController.swift; sourceTree = "<group>"; };
 		5F98D6B52851A85000F1214F /* ConsultaSaldoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConsultaSaldoViewController.xib; sourceTree = "<group>"; };
 		5FB47403286651AD00639DD0 /* EmpresasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmpresasViewController.swift; sourceTree = "<group>"; };
@@ -201,6 +213,12 @@
 				5FB47405286651C200639DD0 /* EmpresasViewController.xib */,
 				5F0D4A492869FFFD002948FB /* FormInversionViewController.swift */,
 				5F0D4A4B286A000E002948FB /* FormInversionViewController.xib */,
+				5F2C98A0286ABF2A00D31F0A /* InversionesViewController.swift */,
+				5F2C98A4286AC03700D31F0A /* InversionesViewController.xib */,
+				5F52D481286B3A0900DA1311 /* CeldaPersonalizadaTableViewCell.swift */,
+				5F52D482286B3A0900DA1311 /* CeldaPersonalizadaTableViewCell.xib */,
+				5F8B0128286F2C09006F76AE /* InversionViewController.swift */,
+				5F8B0129286F2C09006F76AE /* InversionViewController.xib */,
 			);
 			path = "Banco-IOS";
 			sourceTree = "<group>";
@@ -347,7 +365,9 @@
 			files = (
 				5FB47406286651C200639DD0 /* EmpresasViewController.xib in Resources */,
 				5F98D6B62851A85000F1214F /* ConsultaSaldoViewController.xib in Resources */,
+				5F2C98A5286AC03700D31F0A /* InversionesViewController.xib in Resources */,
 				5F76A1DB285387630019544B /* MovimientosViewController.xib in Resources */,
+				5F8B012B286F2C09006F76AE /* InversionViewController.xib in Resources */,
 				5FF4747B2851741100763859 /* ConfigurarPerfilViewController.xib in Resources */,
 				5F558002285279E400C202AB /* MiInformacionViewController.xib in Resources */,
 				5FFD9F0B2852B3BE00AC1700 /* DepositoViewController.xib in Resources */,
@@ -355,6 +375,7 @@
 				5FF4745528511D2B00763859 /* GoogleService-Info.plist in Resources */,
 				5FF4747028515B8100763859 /* MenuViewController.xib in Resources */,
 				5F3A60852858337200E15ACE /* TransferenciaViewController.xib in Resources */,
+				5F52D484286B3A0900DA1311 /* CeldaPersonalizadaTableViewCell.xib in Resources */,
 				5F72C741285117EA00A7E610 /* Assets.xcassets in Resources */,
 				5F07C2AF285B9AD000275124 /* FormTransferenciaViewController.xib in Resources */,
 				5F72C73F285117E900A7E610 /* Main.storyboard in Resources */,
@@ -386,11 +407,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F8B012A286F2C09006F76AE /* InversionViewController.swift in Sources */,
 				5F07C2AD285B9AA000275124 /* FormTransferenciaViewController.swift in Sources */,
 				5F72C73C285117E900A7E610 /* AuthViewController.swift in Sources */,
 				5F0D4A4A2869FFFD002948FB /* FormInversionViewController.swift in Sources */,
 				5F98D6B42851A7F700F1214F /* ConsultaSaldoViewController.swift in Sources */,
 				5F5927D52864ADEC00F4D242 /* DBManager.swift in Sources */,
+				5F52D483286B3A0900DA1311 /* CeldaPersonalizadaTableViewCell.swift in Sources */,
 				5F558000285279C800C202AB /* MiInformacionViewController.swift in Sources */,
 				5F012A452852AE1B000D69C5 /* DepositoViewController.swift in Sources */,
 				5FFD9F0D2852BEF500AC1700 /* RetiroViewController.swift in Sources */,
@@ -400,6 +423,7 @@
 				5F72C738285117E900A7E610 /* AppDelegate.swift in Sources */,
 				5F72C73A285117E900A7E610 /* SceneDelegate.swift in Sources */,
 				5F3A60832858335C00E15ACE /* TransferenciaViewController.swift in Sources */,
+				5F2C98A1286ABF2A00D31F0A /* InversionesViewController.swift in Sources */,
 				5FF4746A28513E6B00763859 /* MenuViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

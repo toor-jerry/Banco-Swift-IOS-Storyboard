@@ -106,6 +106,9 @@
                             <buttonConfiguration key="configuration" style="tinted" image="chart.line.uptrend.xyaxis" catalog="system" title="Ver inversiones">
                                 <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
                             </buttonConfiguration>
+                            <connections>
+                                <action selector="verInversiones:" destination="-1" eventType="touchUpInside" id="scB-rh-FqJ"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mLK-21-eb6">
                             <rect key="frame" x="0.0" y="301.5" width="382" height="31"/>

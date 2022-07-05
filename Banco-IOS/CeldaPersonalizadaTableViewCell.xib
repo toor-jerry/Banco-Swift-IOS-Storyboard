@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="celdaPersonalizada" rowHeight="143" id="KGk-i7-Jjw" customClass="CeldaPersonalizadaTableViewCell" customModule="Banco_IOS" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="354" height="143"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="354" height="143"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Imagen_no_disponible" translatesAutoresizingMaskIntoConstraints="NO" id="QXw-jX-RI9">
+                        <rect key="frame" x="10" y="10" width="100" height="123"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="xPW-Ee-L8E"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Inversión:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ku3-X2-0kH">
+                        <rect key="frame" x="199" y="51.5" width="73" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fecha de inversión:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wxI-Nw-01E">
+                        <rect key="frame" x="150" y="82" width="174" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fecha" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O8M-OH-feE">
+                        <rect key="frame" x="120" y="107.5" width="204" height="20.5"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                        <color key="textColor" systemColor="linkColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nombre empresa" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ePK-eD-zmu">
+                        <rect key="frame" x="115" y="20" width="229" height="21.5"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ Monto" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ad1-dy-Tb1">
+                        <rect key="frame" x="277" y="51.5" width="67" height="20.5"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                        <color key="textColor" systemColor="linkColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="O8M-OH-feE" secondAttribute="trailing" constant="10" id="7AR-E2-PB2"/>
+                    <constraint firstAttribute="bottom" secondItem="QXw-jX-RI9" secondAttribute="bottom" constant="10" id="EMl-YS-qnn"/>
+                    <constraint firstItem="ePK-eD-zmu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="G5P-ft-Lhd"/>
+                    <constraint firstItem="O8M-OH-feE" firstAttribute="top" secondItem="wxI-Nw-01E" secondAttribute="bottom" constant="5" id="ITX-U4-fwa"/>
+                    <constraint firstAttribute="trailing" secondItem="ad1-dy-Tb1" secondAttribute="trailing" constant="10" id="J5d-44-qKM"/>
+                    <constraint firstItem="O8M-OH-feE" firstAttribute="leading" secondItem="QXw-jX-RI9" secondAttribute="trailing" constant="10" id="Nup-eA-4J0"/>
+                    <constraint firstItem="wxI-Nw-01E" firstAttribute="leading" secondItem="QXw-jX-RI9" secondAttribute="trailing" constant="40" id="Rg6-dk-81g"/>
+                    <constraint firstItem="QXw-jX-RI9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Sge-as-QE7"/>
+                    <constraint firstItem="ad1-dy-Tb1" firstAttribute="top" secondItem="ePK-eD-zmu" secondAttribute="bottom" constant="10" id="VhI-F3-w3D"/>
+                    <constraint firstItem="ad1-dy-Tb1" firstAttribute="leading" secondItem="ku3-X2-0kH" secondAttribute="trailing" constant="5" id="d0q-1P-86P"/>
+                    <constraint firstItem="ku3-X2-0kH" firstAttribute="top" secondItem="ePK-eD-zmu" secondAttribute="bottom" constant="10" id="dlP-yC-GMX"/>
+                    <constraint firstItem="wxI-Nw-01E" firstAttribute="top" secondItem="ad1-dy-Tb1" secondAttribute="bottom" constant="10" id="fI6-S3-lym"/>
+                    <constraint firstAttribute="trailing" secondItem="ePK-eD-zmu" secondAttribute="trailing" constant="10" id="fwF-aP-5Vv"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="wxI-Nw-01E" secondAttribute="trailing" constant="10" id="hS2-re-pnz"/>
+                    <constraint firstItem="wxI-Nw-01E" firstAttribute="top" secondItem="ku3-X2-0kH" secondAttribute="bottom" constant="10" id="s4S-fU-0Dn"/>
+                    <constraint firstItem="ePK-eD-zmu" firstAttribute="leading" secondItem="QXw-jX-RI9" secondAttribute="trailing" constant="5" id="wAW-io-N5t"/>
+                    <constraint firstItem="QXw-jX-RI9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="wJs-Hz-xgl"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="fechaLabel" destination="O8M-OH-feE" id="aUz-UN-K2u"/>
+                <outlet property="logoImagen" destination="QXw-jX-RI9" id="JuW-Jh-OAp"/>
+                <outlet property="montoLabel" destination="ad1-dy-Tb1" id="5Ez-dj-ZU3"/>
+                <outlet property="nombreEmpresaLabel" destination="ePK-eD-zmu" id="iTf-jP-DWx"/>
+            </connections>
+            <point key="canvasLocation" x="46.376811594202906" y="121.54017857142857"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="Imagen_no_disponible" width="240" height="240"/>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

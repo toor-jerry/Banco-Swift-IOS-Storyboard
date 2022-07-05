@@ -14,16 +14,16 @@ class MovimientosViewController: UIViewController {
     @IBOutlet weak var movimientosTableView: UITableView!
     
     private let email: String
-    private var data: [String] = ["Sin movimientos que mostrar"]
+    private var data: [String]
     private var tituloTabla: String
     private let db = Firestore.firestore()
     
     init(email: String) {
         self.email = email
         self.tituloTabla = "Todos los movimientos"
+        self.data = ["Sin movimientos que mostrar"]
         
         super.init(nibName: nil, bundle: nil)
-        
         self.getTodosLosMovimientos { (dataDB) in
             self.data = dataDB
             self.tituloTabla += " - (\(self.data.count) registros)"
@@ -39,6 +39,8 @@ class MovimientosViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Movimientos"
+        self.data = ["Sin movimientos que mostrar"]
+
         // Do any additional setup after loading the view.
         movimientosTableView.dataSource = self
         movimientosTableView.tableFooterView = UIView()
@@ -62,7 +64,7 @@ class MovimientosViewController: UIViewController {
             self.db.collection("bitacora").whereField("usuario", isEqualTo: self.email).addSnapshotListener { querySnapshot, err in
                 if let err = err {
                     // Alert
-                    let alertController = UIAlertController(title: "Error", message: "A ocurrido un error. \(err)", preferredStyle: .alert)
+                    let alertController = UIAlertController(title: "Error", message: "A ocurrido un error buscando todos los movimientos. \(err)", preferredStyle: .alert)
                     alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
                     
                     self.present(alertController, animated: true, completion: nil)

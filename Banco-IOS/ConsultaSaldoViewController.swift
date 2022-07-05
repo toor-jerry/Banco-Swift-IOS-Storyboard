@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseFirestore
 
-class ConsultaSaldoViewController: UIViewController {
+class ConsultaSaldoViewController: UIViewController{
 
   
     @IBOutlet weak var saldoLabel: UILabel!
@@ -55,7 +55,6 @@ class ConsultaSaldoViewController: UIViewController {
             }
          }
     }
-    
 
     /*
     // MARK: - Navigation

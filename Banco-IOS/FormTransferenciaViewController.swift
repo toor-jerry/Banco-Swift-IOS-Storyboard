@@ -84,25 +84,11 @@ class FormTransferenciaViewController: UIViewController {
             }
          }
         // Información del usuario a transferir
-        self.dbM.getInformacionUsuario(cuenta: self.usuarioDestino.cuenta, clase: self, callback: { ( usuario) in
-            
-            if let cuenta = usuario["cuenta"] as? String {
-            self.cuentaContactoLabel.text = cuenta
-                self.usuarioDestino.cuenta = cuenta
-            }
-            
-            if let correo = usuario["correo"] as? String {
-                self.correoContactoLabel.text = correo
-                self.usuarioDestino.correo = correo
-            }
-            if let nombre = usuario["nombre"] as? String {
-                self.nombreContactoLabel.text = nombre
-                self.usuarioDestino.nombre = nombre
-            }
-            
-            self.usuarioDestino.saldoCuenta = (usuario["saldoCuenta"] as? Double)!
-            self.usuarioDestino.bonoAsignado = (usuario["bonoAsignado"] as? Bool)!
-            self.usuarioDestino.bono = (usuario["bono"] as? Double)!
+        self.dbM.getInformacionUsuarioPorCuentaCorreo(cuentaOCorreo: self.usuarioDestino.cuenta, clase: self, callback: { ( usuario) in
+            self.usuarioDestino = usuario
+            self.cuentaContactoLabel.text = usuario.cuenta
+            self.correoContactoLabel.text = usuario.correo
+            self.nombreContactoLabel.text = usuario.nombre
             
         })
         

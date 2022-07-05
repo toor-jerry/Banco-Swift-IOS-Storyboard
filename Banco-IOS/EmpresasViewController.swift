@@ -24,7 +24,7 @@ class EmpresasViewController: UIViewController {
         
         super.init(nibName: nil, bundle: nil)
         
-        self.dbM.getTodasLasEmpresas(email: self.email, clase: self) { ( dataDB) in
+        self.dbM.getTodasLasEmpresas(clase: self) { ( dataDB) in
             self.data = dataDB
             self.tituloTabla += " - (\(self.data.count) registros)"
             DispatchQueue.main.async {

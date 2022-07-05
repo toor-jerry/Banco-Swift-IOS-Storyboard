@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseCore
+import UserNotifications
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 	Firebase
         FirebaseApp.configure()
+        
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) {(accepted, error) in
+              if !accepted {
+                  print("Permiso denegado")
+              }
+           }
         return true
     }
 

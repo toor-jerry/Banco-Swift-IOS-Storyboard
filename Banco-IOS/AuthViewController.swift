@@ -37,7 +37,7 @@ class AuthViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.db.setLogueadoBandera(loggin: false)
+        _ = self.db.cerrarSesion()
     }
     
     func validarEmail(email:String) -> Bool {
